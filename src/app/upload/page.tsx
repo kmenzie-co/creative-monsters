@@ -2,6 +2,8 @@ import { DAILY_PROMPT } from "@/lib/constants";
 import { getTodayPrompt } from "@/app/actions/submissions";
 import { UploadForm } from "@/components/UploadForm";
 
+export const dynamic = 'force-dynamic';
+
 export default async function UploadPage() {
   const dbPrompt = await getTodayPrompt();
   

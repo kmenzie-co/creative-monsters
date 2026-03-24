@@ -2,6 +2,8 @@ import { DAILY_PROMPT, SUPPORTING_COPY } from "@/lib/constants";
 import { getTodayPrompt } from "@/app/actions/submissions";
 import { HomeHero } from "@/components/HomeHero";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const dbPrompt = await getTodayPrompt();
   
