@@ -6,6 +6,7 @@ import Image from "next/image";
 import { PostHogProvider } from "@/providers/PostHogProvider";
 import PostHogPageView from "@/components/PostHogPageView";
 import { Suspense } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -80,6 +81,7 @@ export default function RootLayout({
                 <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
               </div>
           </footer>
+          <Analytics />
         </PostHogProvider>
       </body>
     </html>
