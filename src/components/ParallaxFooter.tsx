@@ -51,7 +51,7 @@ export function ParallaxFooter() {
       {/* LAYER 3: Foreground Trees (Faster) */}
       <motion.div 
         style={{ y: fgY }}
-        className="absolute inset-x-0 bottom-0 z-20 h-[1200px] w-full"
+        className="absolute inset-x-0 bottom-0 z-20 h-screen w-full"
       >
         <Image 
           src="/tree-foreground.png" 
