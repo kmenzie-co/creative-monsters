@@ -19,7 +19,7 @@ export default async function Home() {
         prompt={displayPrompt} 
         supportingCopy={SUPPORTING_COPY} 
       />
-      <div className="overflow-visible">
+      <div className="-mt-12 overflow-visible">
         <ParallaxFooter />
       </div>
     </div>

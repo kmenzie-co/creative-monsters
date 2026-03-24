@@ -62,7 +62,7 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main className="flex-1 relative isolate overflow-x-hidden">
+        <main className="flex-1 relative isolate">
           {children}
         </main>
 
