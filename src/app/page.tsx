@@ -20,7 +20,7 @@ export default async function Home() {
         supportingCopy={SUPPORTING_COPY} 
       />
       
-      <div className="fixed bottom-0 left-0 right-0 z-10 w-full h-[500px] pointer-events-none">
+      <div className="fixed bottom-0 left-0 right-0 z-10 w-full h-[700px] pointer-events-none">
         <Image 
           src="/bg.png" 
           alt="Background Floor" 
