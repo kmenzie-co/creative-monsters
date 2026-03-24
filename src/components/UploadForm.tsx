@@ -3,7 +3,8 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Camera, CheckCircle2, Loader2, X, Sparkles } from "lucide-react";
-import { submitMonster } from "@/app/actions/submissions";
+import { saveSubmission } from "@/app/actions/submissions";
+import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
 interface UploadFormProps {
@@ -45,23 +46,48 @@ export function UploadForm({ prompt }: UploadFormProps) {
     e.preventDefault();
     if (!file || !monsterName) return;
 
+    // Check file size (Vercel has a 4.5MB limit, but Supabase allows much more)
+    if (file.size > 9 * 1024 * 1024) {
+      setError("Image is too large! Please pick a photo smaller than 10MB.");
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("monsterName", monsterName);
-    formData.append("creatorNickname", nickname);
-
     try {
-      const result = await submitMonster(formData);
+      // 1. Upload to Supabase Storage (on the client!)
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+      const filePath = `uploads/${fileName}`;
+
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("Uploaded Art")
+        .upload(filePath, file);
+
+      if (uploadError) {
+        console.error("Client Upload Error:", uploadError);
+        setError(`Upload failed: ${uploadError.message}. Check your Supabase Storage permissions!`);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 2. Get Public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from("Uploaded Art")
+        .getPublicUrl(filePath);
+
+      // 3. Save submission record in DB (Server Action)
+      const result = await saveSubmission(publicUrl, monsterName, nickname);
+      
       if (result?.error) {
         setError(result.error);
       } else {
         setIsSuccess(true);
       }
     } catch (err) {
-      setError("Network error: The file might be too large or there's a connection issue.");
+      console.error("Upload error:", err);
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

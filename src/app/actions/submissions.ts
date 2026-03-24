@@ -3,50 +3,17 @@
 import { supabase } from "@/lib/supabase";
 import { revalidatePath } from "next/cache";
 
-export async function submitMonster(formData: FormData) {
+export async function saveSubmission(imageUrl: string, monsterName: string, creatorNickname: string) {
   try {
-    const image = formData.get("image") as File;
-    const monsterName = formData.get("monsterName") as string;
-    const creatorNickname = formData.get("creatorNickname") as string;
-
-    if (!image || !monsterName) {
-      return { error: "Missing required fields (image and monster name are required!)" };
+    if (!imageUrl || !monsterName) {
+      return { error: "Missing required fields!" };
     }
 
-    // Check file size (Vercel has a 4.5MB limit for server actions, but we boosted Next.js to 10MB)
-    // Note: Vercel's platform-level limit is 4.5MB, so this may still fail.
-    if (image.size > 9 * 1024 * 1024) {
-      return { error: "Image is too large! Please pick a photo smaller than 10MB." };
-    }
-
-    // 1. Upload image to Supabase Storage
-    const fileExt = image.name.split(".").pop();
-    const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-    const filePath = `uploads/${fileName}`;
-
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("Uploaded Art")
-      .upload(filePath, image);
-
-    if (uploadError) {
-      console.error("Supabase Storage Error:", uploadError);
-      if (uploadError.message.toLowerCase().includes("bucket not found")) {
-        return { error: "The 'Uploaded Art' bucket is missing! Please create it in your Supabase dashboard." };
-      }
-      return { error: `Upload failed: ${uploadError.message}` };
-    }
-
-    // 2. Get public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from("Uploaded Art")
-      .getPublicUrl(filePath);
-
-    // 3. Create submission record in DB
     const { error: dbError } = await supabase
       .from("submissions")
       .insert([
         {
-          image_url: publicUrl,
+          image_url: imageUrl,
           monster_name: monsterName,
           creator_nickname: creatorNickname || null,
           status: "pending",
@@ -55,19 +22,22 @@ export async function submitMonster(formData: FormData) {
 
     if (dbError) {
       console.error("Supabase DB Error:", dbError);
-      if (dbError.code === 'PGRST205') {
-        return { error: "The 'submissions' table is missing! Please run the SQL schema in your Supabase dashboard." };
-      }
-      return { error: `Failed to save monster: ${dbError.message}` };
+      return { error: `Failed to save creation: ${dbError.message}` };
     }
 
     revalidatePath("/admin");
     revalidatePath("/gallery");
     return { success: true };
   } catch (err) {
-    console.error("Unhappy monster error:", err);
-    return { error: err instanceof Error ? err.message : "Something went wrong on the server" };
+    console.error("Save submission error:", err);
+    return { error: "Something went wrong on the server" };
   }
+}
+
+
+export async function submitMonster(formData: FormData) {
+  // Deprecated: use client-side upload + saveSubmission for better performance on Vercel
+  return { error: "Please use the updated client-side upload method." };
 }
 
 export async function getPendingSubmissions() {
