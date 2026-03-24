@@ -10,11 +10,11 @@ export function ParallaxFooter() {
   // Track scroll on the whole page
   const { scrollY } = useScroll();
 
-  // Background layer: Moves very slowly (e.g., shifts 50px upwards as user scrolls)
-  const bgY = useTransform(scrollY, [0, 1000], [0, -50]);
+  // Background layer: Moves very slowly (e.g., shifts 100px upwards as user scrolls)
+  const bgY = useTransform(scrollY, [0, 1200], [100, 0]);
   
-  // Middle layer: Moves faster (e.g., shifts 150px upwards as user scrolls)
-  const middleY = useTransform(scrollY, [0, 1000], [0, -150]);
+  // Middle layer: Starts further down (300px) and moves faster relative to scroll
+  const middleY = useTransform(scrollY, [0, 1200], [300, 0]);
 
   return (
     <div ref={containerRef} className="fixed bottom-0 left-0 right-0 z-10 w-full pointer-events-none overflow-hidden h-[800px]">
@@ -35,7 +35,7 @@ export function ParallaxFooter() {
       {/* Middle Ground Layer: Faster */}
       <motion.div 
         style={{ y: middleY }}
-        className="absolute inset-x-0 bottom-0 w-full h-full translate-y-20" // Slight initial offset to separate them
+        className="absolute inset-x-0 bottom-0 w-full h-full"
       >
         <Image 
           src="/tree-middleground.png" 
