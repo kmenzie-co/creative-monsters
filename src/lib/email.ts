@@ -1,15 +1,16 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function sendSubmissionNotification(monsterName: string, creatorNickname: string, imageUrl: string) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
     const adminEmail = process.env.ADMIN_EMAIL;
     
-    if (!process.env.RESEND_API_KEY || !adminEmail) {
+    if (!apiKey || !adminEmail) {
       console.warn("Resend API Key or Admin Email missing. Email notification skipped.");
       return;
     }
+
+    const resend = new Resend(apiKey);
 
     await resend.emails.send({
       from: 'Creative Monsters <notifications@resend.dev>', // You can customize this later with a domain
