@@ -26,7 +26,7 @@ export function ParallaxFooter() {
       {/* LAYER 1: Background Mountains (Slower) */}
       <motion.div 
         style={{ y: bgY, scale: 1.1 }}
-        className="absolute inset-x-0 bottom-0 z-0 h-screen w-full"
+        className="absolute inset-x-0 bottom-0 z-0 h-full w-full"
       >
         <Image 
           src="/bg.png" 
