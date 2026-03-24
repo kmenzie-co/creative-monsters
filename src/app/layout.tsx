@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${fredoka.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-monster-pink/30">
+      <body className="min-h-full overflow-x-hidden flex flex-col bg-background text-foreground selection:bg-monster-pink/30">
         <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-md transform-gpu backface-hidden">
           <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
             <Link href="/" className="group flex items-center gap-2">

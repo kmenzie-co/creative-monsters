@@ -22,7 +22,7 @@ export function ParallaxFooter() {
   const fgY = useTransform(scrollYProgress, [0, 1], [600, 0]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none">
+    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none overflow-x-hidden overflow-y-visible">
       {/* LAYER 1: Background Mountains (Slower) */}
       <motion.div 
         style={{ y: bgY, scale: 1.1 }}
