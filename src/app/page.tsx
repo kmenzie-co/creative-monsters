@@ -19,9 +19,12 @@ export default async function Home() {
         prompt={displayPrompt} 
         supportingCopy={SUPPORTING_COPY} 
       />
-      <div className="-mt-12 overflow-visible">
+      <div className="overflow-visible">
         <ParallaxFooter />
       </div>
+      
+      {/* Solid mask to prevent bottom parallax leakage */}
+      <div className="h-16 w-full bg-white relative z-50 mt-[-1px]" />
     </div>
   );
 }
