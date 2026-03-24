@@ -19,10 +19,9 @@ export default async function Home() {
         prompt={displayPrompt} 
         supportingCopy={SUPPORTING_COPY} 
       />
-      {/* Small spacer to pull footer up while still allowing some scroll space */}
-      <div className="h-[200px]" />
-      
-      <ParallaxFooter />
+      <div className="-mt-12 overflow-visible">
+        <ParallaxFooter />
+      </div>
     </div>
   );
 }

@@ -14,15 +14,15 @@ export function ParallaxFooter() {
   });
 
   // 1. Background (bg.png): Moves slower than the scroll by drifting DOWN
-  // Starts high (-300) and ends exactly at 0 to align with the tree base
-  const bgY = useTransform(scrollYProgress, [0, 1], [-300, 0]);
+  // Starts even higher (-250) to ensure the peaks are clear immediately
+  const bgY = useTransform(scrollYProgress, [0, 1], [-250, 0]);
   
   // 3. Foreground (tree-foreground.png): Moves faster than the scroll by drifting UP
   // Starts low (600) and ends exactly at 0 to meet the tree base from below
   const fgY = useTransform(scrollYProgress, [0, 1], [600, 0]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none mt-12">
+    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none">
       {/* LAYER 1: Background Mountains (Slower) */}
       <motion.div 
         style={{ y: bgY, scale: 1.1 }}
