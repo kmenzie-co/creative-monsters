@@ -66,12 +66,12 @@ export default function RootLayout({
           {children}
         </main>
 
-        <div className="fixed bottom-0 left-0 right-0 -z-50 w-full h-[300px] pointer-events-none">
+        <div className="fixed bottom-0 left-0 right-0 -z-50 w-full h-[400px] pointer-events-none">
           <Image 
             src="/bg.png" 
             alt="Background" 
             fill 
-            className="object-contain object-bottom"
+            className="object-cover object-bottom"
             priority
           />
         </div>
