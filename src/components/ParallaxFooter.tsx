@@ -13,13 +13,12 @@ export function ParallaxFooter() {
     offset: ["start end", "end end"]
   });
 
-  // 1. Background (bg.png): Moves slower than the scroll.
-  // It starts slightly higher and moves down less than the scroll, making it feel distant.
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  // 1. Background (bg.png): Moves slower than the scroll by drifting DOWN as you move through
+  const bgY = useTransform(scrollYProgress, [0, 1], [-80, 80]);
   
-  // 3. Foreground (tree-foreground.png): Moves faster than the scroll.
-  // It starts low and moves UP quickly to overlap the middle ground.
-  const fgY = useTransform(scrollYProgress, [0, 1], [200, -200]);
+  // 3. Foreground (tree-foreground.png): Moves faster than the scroll by drifting UP
+  // Starts 400px low and ends exactly at y: 0 (the bottom of our view)
+  const fgY = useTransform(scrollYProgress, [0, 1], [400, 0]);
 
   return (
     <div ref={containerRef} className="relative w-full h-[800px] overflow-hidden pointer-events-none mt-24">
@@ -51,13 +50,13 @@ export function ParallaxFooter() {
       {/* LAYER 3: Foreground Trees (Faster) */}
       <motion.div 
         style={{ y: fgY }}
-        className="absolute inset-x-0 -bottom-40 z-20 h-[150%] w-full"
+        className="absolute inset-x-0 bottom-0 z-20 h-[1000px] w-full"
       >
         <Image 
           src="/tree-foreground.png" 
           alt="Foreground Trees" 
           fill 
-          className="object-contain object-top"
+          className="object-cover object-top"
           priority
         />
       </motion.div>
