@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${fredoka.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-monster-pink/30">
+      <body className="min-h-screen flex flex-col selection:bg-monster-pink/30">
         <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/70 backdrop-blur-md">
           <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
             <Link href="/" className="group flex items-center gap-2">
@@ -65,8 +65,8 @@ export default function RootLayout({
         <main className="flex-1">
           {children}
         </main>
-
-        <div className="fixed bottom-0 left-0 right-0 -z-50 w-full h-[400px] pointer-events-none">
+        
+        <div className="relative w-full h-[300px] sm:h-[500px] pointer-events-none">
           <Image 
             src="/bg.png" 
             alt="Background" 
