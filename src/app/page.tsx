@@ -14,12 +14,16 @@ export default async function Home() {
   };
 
   return (
-    <>
+    <div className="relative min-h-screen">
       <HomeHero 
         prompt={displayPrompt} 
         supportingCopy={SUPPORTING_COPY} 
       />
+      
+      {/* Spacer to allow for scrolling the parallax layers into view */}
+      <div className="h-[500px]" />
+      
       <ParallaxFooter />
-    </>
+    </div>
   );
 }
