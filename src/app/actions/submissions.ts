@@ -117,7 +117,8 @@ export async function getApprovedSubmissions() {
 
 export async function getTodayPrompt() {
   try {
-    const today = new Date().toISOString().split('T')[0];
+    // Use Mountain Time (America/Denver) for prompt switching
+    const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver' }).format(new Date());
     
     const { data: prompt, error } = await supabaseAdmin
       .from("prompts")
