@@ -19,8 +19,8 @@ export default async function Home() {
         prompt={displayPrompt} 
         supportingCopy={SUPPORTING_COPY} 
       />
-      {/* Larger spacer to allow for scrolling the 3-layer parallax layers into view */}
-      <div className="h-[600px]" />
+      {/* Small spacer to pull footer up while still allowing some scroll space */}
+      <div className="h-[200px]" />
       
       <ParallaxFooter />
     </div>
