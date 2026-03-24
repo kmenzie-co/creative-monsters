@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Creative Monsters 👾
 
-## Getting Started
+Creative Monsters is a playful MVP web app designed to inspire kids with daily creative challenges. Kids can draw, build, or craft anything offline, take a photo, and share it with the "Monster World" (after a quick review by the Monster Welcome Committee).
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Daily Creative Prompt**: A new playful challenge every day (hardcoded in v1).
+- **Monster Upload**: Simple image upload flow with name and nickname.
+- **Moderation System**: Secure admin portal to approve or reject submissions.
+- **Public Gallery**: A magical shared space to see all approved monster creations.
+- **Playful Design**: Pixar-inspired aesthetics, micro-animations, and whimsical micro-copy.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js](https://nextjs.org/) (App Router, TypeScript)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (v4)
+- **Database & Storage**: [Supabase](https://supabase.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Local Setup
 
-## Learn More
+1. **Clone the repository** and install dependencies:
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Supabase Configuration**:
+   - Create a new project in [Supabase](https://app.supabase.com/).
+   - Go to the **SQL Editor** and run the script found in `supabase/schema.sql`.
+ -- Set up Storage for monster images
+-- NOTE: You must manually create a bucket named 'Uploaded Art' in the Supabase Dashboard
+-- with Public Access enabled for the public gallery to work easily.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Environment Variables**:
+   - Rename `.env.local.example` to `.env.local`.
+   - Fill in your Supabase URL, Anon Key, and Service Role Key (found in Project Settings > API).
+   - Set an `ADMIN_PASSWORD` (default in code for MVP is `monster123`).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to see the magic!
 
-## Deploy on Vercel
+## 🛡️ Moderation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Access the admin portal at `/admin`.
+- Use the password defined in your environment (or `monster123` for the initial test).
+- Review pending monsters and click **Approve** to send them to the Public Gallery!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Creative Prompts
+
+To update the daily prompt, simply edit `src/lib/constants.ts`.
+
+---
+*Made with ✨ magic and imagination for kids everywhere.*
