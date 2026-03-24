@@ -15,9 +15,9 @@ export default async function GalleryPage() {
 
       <div className="container mx-auto px-4 py-12 sm:py-20 text-center">
         <header className="mb-16 sm:mb-24">
-          <div className="inline-flex items-center gap-2 rounded-full bg-monster-teal/10 px-4 py-1.5 text-sm font-semibold text-monster-teal border border-monster-teal/20 mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full bg-monster-blue/10 px-4 py-1.5 text-sm font-semibold text-monster-blue border border-monster-blue/20 mb-6 font-fredoka">
             <Sparkles className="h-4 w-4" />
-            <span>The Portal is Open!</span>
+            <span>The Gallery is Open!</span>
           </div>
           <div className="mb-12 text-center">
             <h1 className="text-4xl sm:text-6xl font-display font-bold text-gray-900 mb-4 px-4 leading-tight">

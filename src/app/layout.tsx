@@ -50,7 +50,7 @@ export default function RootLayout({
                 href="/gallery" 
                 className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-pink transition-colors"
               >
-                Monster World
+                Gallery
               </Link>
               <Link 
                 href="/upload" 
