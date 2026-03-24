@@ -14,15 +14,15 @@ export function ParallaxFooter() {
   });
 
   // 1. Background (bg.png): Moves slower than the scroll by drifting DOWN
-  // Starts even higher (-250) to ensure the peaks are clear immediately
-  const bgY = useTransform(scrollYProgress, [0, 1], [-250, 0]);
+  // Starts extremely high (-400) to ensure the peaks are clear immediately
+  const bgY = useTransform(scrollYProgress, [0, 1], [-400, 0]);
   
   // 3. Foreground (tree-foreground.png): Moves faster than the scroll by drifting UP
-  // Starts low (600) and ends exactly at 0 to meet the tree base from below
+  // Starts 600px low for a very high-speed "emerging from the floor" feel
   const fgY = useTransform(scrollYProgress, [0, 1], [600, 0]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none overflow-x-hidden -mt-12">
+    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none -mt-24">
       {/* LAYER 1: Background Mountains (Slower) */}
       <motion.div 
         style={{ y: bgY, scale: 1.1 }}
@@ -38,7 +38,7 @@ export function ParallaxFooter() {
       </motion.div>
 
       {/* LAYER 2: Middle Ground Trees (Anchor - Inline 1:1) */}
-      <div className="absolute inset-x-0 -bottom-10 z-10 w-full h-[110%]">
+      <div className="absolute inset-x-0 -bottom-1 z-10 w-full h-[105%]">
         <Image 
           src="/tree-middleground.png" 
           alt="Middle Ground Trees" 
