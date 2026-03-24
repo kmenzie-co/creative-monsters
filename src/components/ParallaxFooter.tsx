@@ -22,11 +22,11 @@ export function ParallaxFooter() {
   const fgY = useTransform(scrollYProgress, [0, 1], [600, 0]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[850px] overflow-hidden pointer-events-none mt-12 bg-black">
+    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none mt-24">
       {/* LAYER 1: Background Mountains (Slower) */}
       <motion.div 
         style={{ y: bgY, scale: 1.1 }}
-        className="absolute inset-x-0 bottom-0 z-0 h-[120%] w-full"
+        className="absolute inset-x-0 bottom-0 z-0 h-full w-full"
       >
         <Image 
           src="/bg.png" 
@@ -51,7 +51,7 @@ export function ParallaxFooter() {
       {/* LAYER 3: Foreground Trees (Faster) */}
       <motion.div 
         style={{ y: fgY }}
-        className="absolute inset-x-0 bottom-0 z-20 h-[150%] w-full"
+        className="absolute inset-x-0 bottom-0 z-20 h-screen w-full"
       >
         <Image 
           src="/tree-foreground.png" 

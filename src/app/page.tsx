@@ -22,6 +22,9 @@ export default async function Home() {
       <div className="overflow-visible">
         <ParallaxFooter />
       </div>
+      
+      {/* Solid mask to prevent bottom parallax leakage */}
+      <div className="h-16 w-full bg-white relative z-50 mt-[-1px]" />
     </div>
   );
 }
