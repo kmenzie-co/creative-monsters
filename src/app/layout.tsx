@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${fredoka.variable} h-full antialiased`}
     >
-      <body className="min-h-screen flex flex-col selection:bg-monster-pink/30">
+      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-monster-pink/30">
         <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/70 backdrop-blur-md">
           <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
             <Link href="/" className="group flex items-center gap-2">
@@ -62,11 +62,17 @@ export default function RootLayout({
           </div>
         </header>
 
-        <main className="flex-1">
+        <main className="flex-1 relative isolate">
           {children}
         </main>
-        
-        <div className="relative w-full h-[300px] sm:h-[500px] pointer-events-none">
+
+        <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+          <div className="blob-animation absolute -top-[10%] -left-[10%] h-[800px] w-[800px] rounded-full bg-monster-blue/10 blur-3xl" />
+          <div className="blob-animation absolute top-[20%] -right-[10%] h-[600px] w-[600px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
+          <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
+        </div>
+
+        <div className="fixed bottom-0 left-0 right-0 -z-40 w-full h-[400px] pointer-events-none">
           <Image 
             src="/bg.png" 
             alt="Background" 

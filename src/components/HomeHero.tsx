@@ -15,13 +15,8 @@ interface HomeHeroProps {
 
 export function HomeHero({ prompt, supportingCopy }: HomeHeroProps) {
   return (
-    <div className="relative isolate overflow-hidden">
-      {/* Background Blobs */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="blob-animation absolute -top-[10%] -left-[10%] h-[500px] w-[500px] rounded-full bg-monster-blue/10 blur-3xl" />
-        <div className="blob-animation absolute top-[20%] -right-[10%] h-[400px] w-[400px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
-        <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[600px] w-[600px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
-      </div>
+    <div className="relative">
+      {/* Content */}
 
       <div className="container mx-auto px-4 pt-16 pb-24 sm:pt-24 sm:pb-32">
         <div className="mx-auto max-w-3xl text-center">
