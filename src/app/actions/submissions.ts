@@ -1,6 +1,7 @@
 "use server";
 
 import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
 
 export async function saveSubmission(imageUrl: string, monsterName: string, creatorNickname: string) {
@@ -9,7 +10,7 @@ export async function saveSubmission(imageUrl: string, monsterName: string, crea
       return { error: "Missing required fields!" };
     }
 
-    const { error: dbError } = await supabase
+    const { error } = await supabaseAdmin
       .from("submissions")
       .insert([
         {
@@ -20,9 +21,9 @@ export async function saveSubmission(imageUrl: string, monsterName: string, crea
         },
       ]);
 
-    if (dbError) {
-      console.error("Supabase DB Error:", dbError);
-      return { error: `Failed to save creation: ${dbError.message}` };
+    if (error) {
+      console.error("Supabase DB Error:", error);
+      return { error: `Failed to save creation: ${error.message}` };
     }
 
     revalidatePath("/admin");
@@ -41,7 +42,7 @@ export async function submitMonster(formData: FormData) {
 }
 
 export async function getPendingSubmissions() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("submissions")
     .select("*")
     .eq("status", "pending")
@@ -60,7 +61,7 @@ export async function getPendingSubmissions() {
 }
 
 export async function approveMonster(id: string) {
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from("submissions")
     .update({ status: "approved" })
     .eq("id", id);
@@ -76,7 +77,7 @@ export async function approveMonster(id: string) {
 }
 
 export async function rejectMonster(id: string) {
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from("submissions")
     .update({ status: "rejected" })
     .eq("id", id);
@@ -91,7 +92,7 @@ export async function rejectMonster(id: string) {
 }
 
 export async function getApprovedSubmissions() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("submissions")
     .select("*")
     .eq("status", "approved")
@@ -113,7 +114,7 @@ export async function getTodayPrompt() {
   try {
     const today = new Date().toISOString().split('T')[0];
     
-    const { data: prompt, error } = await supabase
+    const { data: prompt, error } = await supabaseAdmin
       .from("prompts")
       .select("*")
       .eq("date", today)
