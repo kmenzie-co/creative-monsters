@@ -66,16 +66,15 @@ export default function RootLayout({
           {children}
         </main>
 
-        <footer className="border-t border-black/5 bg-white py-8 sm:py-12">
-          <div className="container mx-auto px-4 text-center">
-            <p className="font-display text-lg sm:text-xl text-monster-blue/60">
-              Made with ✨ <span className="text-monster-pink">magic</span> and imagination.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              A safe place for kids to be creative and share their imagination with the world.
-            </p>
-          </div>
-        </footer>
+        <div className="fixed bottom-0 left-0 right-0 -z-50 w-full h-[300px] pointer-events-none">
+          <Image 
+            src="/bg.png" 
+            alt="Background" 
+            fill 
+            className="object-contain object-bottom"
+            priority
+          />
+        </div>
       </body>
     </html>
   );
