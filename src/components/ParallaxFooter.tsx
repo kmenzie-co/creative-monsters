@@ -7,22 +7,22 @@ import { useRef } from "react";
 export function ParallaxFooter() {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Track scroll only when this component is in / entering view
+  // Track scroll starting earlier (when footer is in middle of viewport)
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end end"]
+    offset: ["start center", "end end"]
   });
 
   // 1. Background (bg.png): Moves slower than the scroll by drifting DOWN
-  // Starts extremely high (-400) to ensure the peaks are clear immediately
-  const bgY = useTransform(scrollYProgress, [0, 1], [-400, 0]);
+  // Starts high (-300) and ends exactly at 0 to align with the tree base
+  const bgY = useTransform(scrollYProgress, [0, 1], [-300, 0]);
   
   // 3. Foreground (tree-foreground.png): Moves faster than the scroll by drifting UP
   // Starts 600px low for a very high-speed "emerging from the floor" feel
   const fgY = useTransform(scrollYProgress, [0, 1], [600, 0]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[900px] pointer-events-none -mt-24">
+    <div ref={containerRef} className="relative w-full h-[800px] pointer-events-none mt-0">
       {/* LAYER 1: Background Mountains (Slower) */}
       <motion.div 
         style={{ y: bgY, scale: 1.1 }}
@@ -38,7 +38,7 @@ export function ParallaxFooter() {
       </motion.div>
 
       {/* LAYER 2: Middle Ground Trees (Anchor - Inline 1:1) */}
-      <div className="absolute inset-x-0 -bottom-1 z-10 w-full h-[105%]">
+      <div className="absolute inset-x-0 bottom-0 z-10 w-full h-full">
         <Image 
           src="/tree-middleground.png" 
           alt="Middle Ground Trees" 
