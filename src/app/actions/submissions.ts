@@ -3,6 +3,7 @@
 import { supabase } from "@/lib/supabase";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
+import { sendSubmissionNotification } from "@/lib/email";
 
 export async function saveSubmission(imageUrl: string, monsterName: string, creatorNickname: string) {
   try {
@@ -28,6 +29,10 @@ export async function saveSubmission(imageUrl: string, monsterName: string, crea
 
     revalidatePath("/admin");
     revalidatePath("/gallery");
+
+    // Send email notification (async, don't block response)
+    sendSubmissionNotification(monsterName, creatorNickname, imageUrl).catch(console.error);
+
     return { success: true };
   } catch (err) {
     console.error("Save submission error:", err);
