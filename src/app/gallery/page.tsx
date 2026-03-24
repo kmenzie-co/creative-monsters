@@ -2,12 +2,14 @@ import { getApprovedSubmissions } from "@/app/actions/submissions";
 import { Sparkles, Camera } from "lucide-react";
 import Link from "next/link";
 import { MonsterGrid } from "@/components/MonsterGrid";
+import TrackEvent from "@/components/TrackEvent";
 
 export default async function GalleryPage() {
   const monsters = await getApprovedSubmissions();
 
   return (
     <div className="relative isolate min-h-screen bg-background pb-24">
+      <TrackEvent name="gallery_viewed" />
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 left-0 h-full w-full bg-[radial-gradient(#8b5cf6_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.03]" />

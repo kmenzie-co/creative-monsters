@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lock, ShieldCheck, CheckCircle2, XCircle, Clock, Loader2 } from "lucide-react";
 import { getPendingSubmissions, approveMonster, rejectMonster } from "@/app/actions/submissions";
+import posthog from "posthog-js";
 
 export default function AdminPage() {
   const [password, setPassword] = useState("");
@@ -42,9 +43,17 @@ export default function AdminPage() {
     }
   };
 
-  const handleApprove = async (id: string) => {
+  const handleApprove = async (id: string, monster: any) => {
     try {
       await approveMonster(id);
+      
+      // Track approval
+      posthog.capture("submission_approved", {
+        submission_id: id,
+        monster_name: monster.monster_name,
+        creator_nickname: monster.creator_nickname
+      });
+
       setSubmissions(submissions.filter((s) => s.id !== id));
     } catch (err) {
       alert("Failed to approve");
@@ -156,7 +165,7 @@ export default function AdminPage() {
                   
                   <div className="mt-auto flex gap-3">
                     <button
-                      onClick={() => handleApprove(monster.id)}
+                      onClick={() => handleApprove(monster.id, monster)}
                       className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-monster-blue px-4 py-2.5 text-sm font-bold text-white transition-transform hover:scale-105 active:scale-95"
                     >
                       <CheckCircle2 className="h-4 w-4" />

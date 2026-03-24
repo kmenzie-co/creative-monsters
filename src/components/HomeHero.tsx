@@ -4,6 +4,8 @@ import Link from "next/image";
 import { motion } from "framer-motion";
 import { Sparkles, Camera, Palette, Construction } from "lucide-react";
 import Link_Next from "next/link"; // Re-import with a different name to avoids conflict with Image
+import posthog from "posthog-js";
+import { useEffect } from "react";
 
 interface HomeHeroProps {
   prompt: {
@@ -14,6 +16,13 @@ interface HomeHeroProps {
 }
 
 export function HomeHero({ prompt, supportingCopy }: HomeHeroProps) {
+  useEffect(() => {
+    // Track prompt view
+    posthog.capture("prompt_viewed", {
+      prompt_text: prompt.title
+    });
+  }, [prompt.title]);
+
   return (
     <div className="relative">
       {/* Content */}

@@ -11,7 +11,7 @@ export async function saveSubmission(imageUrl: string, monsterName: string, crea
       return { error: "Missing required fields!" };
     }
 
-    const { error } = await supabaseAdmin
+    const { data, error } = await supabaseAdmin
       .from("submissions")
       .insert([
         {
@@ -20,7 +20,9 @@ export async function saveSubmission(imageUrl: string, monsterName: string, crea
           creator_nickname: creatorNickname || null,
           status: "pending",
         },
-      ]);
+      ])
+      .select()
+      .single();
 
     if (error) {
       console.error("Supabase DB Error:", error);
@@ -33,7 +35,7 @@ export async function saveSubmission(imageUrl: string, monsterName: string, crea
     // Send email notification (async, don't block response)
     sendSubmissionNotification(monsterName, creatorNickname, imageUrl).catch(console.error);
 
-    return { success: true };
+    return { success: true, id: data?.id };
   } catch (err) {
     console.error("Save submission error:", err);
     return { error: "Something went wrong on the server" };

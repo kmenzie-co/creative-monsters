@@ -6,6 +6,7 @@ import { Camera, CheckCircle2, Loader2, X, Sparkles } from "lucide-react";
 import { saveSubmission } from "@/app/actions/submissions";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
+import posthog from "posthog-js";
 
 interface UploadFormProps {
   prompt: {
@@ -55,6 +56,13 @@ export function UploadForm({ prompt }: UploadFormProps) {
     setIsSubmitting(true);
     setError(null);
 
+    // Track upload start
+    posthog.capture("upload_started", {
+      prompt_text: prompt.title,
+      has_artwork_name: !!monsterName,
+      has_creator_nickname: !!nickname
+    });
+
     try {
       // 1. Upload to Supabase Storage (on the client!)
       const fileExt = file.name.split(".").pop();
@@ -83,6 +91,13 @@ export function UploadForm({ prompt }: UploadFormProps) {
       if (result?.error) {
         setError(result.error);
       } else {
+        // Track upload completion
+        posthog.capture("upload_completed", {
+          prompt_text: prompt.title,
+          has_artwork_name: !!monsterName,
+          has_creator_nickname: !!nickname,
+          submission_id: result?.id
+        });
         setIsSuccess(true);
       }
     } catch (err) {

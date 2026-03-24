@@ -3,6 +3,9 @@ import { Outfit, Fredoka } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Image from "next/image";
+import { PostHogProvider } from "@/providers/PostHogProvider";
+import PostHogPageView from "@/components/PostHogPageView";
+import { Suspense } from "react";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -33,45 +36,51 @@ export default function RootLayout({
       className={`${outfit.variable} ${fredoka.variable} h-full antialiased`}
     >
       <body className="min-h-full overflow-x-hidden flex flex-col bg-background text-foreground selection:bg-monster-pink/30">
-        <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-md transform-gpu backface-hidden">
-          <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
-            <Link href="/" className="group flex items-center gap-2">
-              <Image 
-                src="/logo.png" 
-                alt="Creative Monsters" 
-                width={180} 
-                height={40} 
-                className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
-                priority
-              />
-            </Link>
-            <nav className="flex items-center gap-4 sm:gap-6">
-              <Link 
-                href="/gallery" 
-                className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-pink transition-colors"
-              >
-                Gallery
+        <PostHogProvider>
+          <Suspense fallback={null}>
+            <PostHogPageView />
+          </Suspense>
+          <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-md transform-gpu backface-hidden">
+            <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
+              <Link href="/" className="group flex items-center gap-2">
+                <Image 
+                  src="/logo.png" 
+                  alt="Creative Monsters" 
+                  width={180} 
+                  height={40} 
+                  className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+                  priority
+                />
               </Link>
-              <Link 
-                href="/upload" 
-                className="rounded-full bg-monster-blue px-4 py-1.5 text-sm sm:text-base font-medium text-white shadow-lg shadow-monster-blue/20 hover:bg-monster-blue/90 transition-all hover:scale-105 active:scale-95"
-              >
-                Share your art
-              </Link>
-            </nav>
-          </div>
-        </header>
+              <nav className="flex items-center gap-4 sm:gap-6">
+                <Link 
+                  href="/gallery" 
+                  className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-pink transition-colors"
+                >
+                  Gallery
+                </Link>
+                <Link 
+                  href="/upload" 
+                  className="rounded-full bg-monster-blue px-4 py-1.5 text-sm sm:text-base font-medium text-white shadow-lg shadow-monster-blue/20 hover:bg-monster-blue/90 transition-all hover:scale-105 active:scale-95"
+                >
+                  Share your art
+                </Link>
+              </nav>
+            </div>
+          </header>
 
-        <main className="flex-1 relative isolate">
-          {children}
-        </main>
+          <main className="flex-1 relative isolate">
+            {children}
+          </main>
 
-        <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
-          <div className="blob-animation absolute -top-[10%] -left-[10%] h-[800px] w-[800px] rounded-full bg-monster-blue/10 blur-3xl" />
-          <div className="blob-animation absolute top-[20%] -right-[10%] h-[600px] w-[600px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
-          <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
-        </div>
-
+          <footer className="mt-auto pointer-events-none overflow-visible">
+             <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+                <div className="blob-animation absolute -top-[10%] -left-[10%] h-[800px] w-[800px] rounded-full bg-monster-blue/10 blur-3xl" />
+                <div className="blob-animation absolute top-[20%] -right-[10%] h-[600px] w-[600px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
+                <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
+              </div>
+          </footer>
+        </PostHogProvider>
       </body>
     </html>
   );

@@ -17,6 +17,7 @@ Creative Monsters is a playful MVP web app designed to inspire kids with daily c
 - **Database & Storage**: [Supabase](https://supabase.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Icons**: [Lucide React](https://lucide.dev/)
+- **Analytics**: [PostHog](https://posthog.com/)
 
 ## 🛠️ Local Setup
 
@@ -48,6 +49,25 @@ Creative Monsters is a playful MVP web app designed to inspire kids with daily c
 Access the admin portal at `/admin`.
 - Use the password defined in your environment (or `monster123` for the initial test).
 - Review pending monsters and click **Approve** to send them to the Public Gallery!
+
+## 📈 Analytics
+
+This project uses **PostHog** to track key engagement events:
+
+- `prompt_viewed`: Triggered when the home page loads.
+- `upload_started`: Triggered when a user clicks the final "Share your art!" button.
+- `upload_completed`: Triggered after a successful submission.
+- `gallery_viewed`: Triggered when the public gallery page is viewed.
+- `submission_approved`: Triggered when an admin approves a monster.
+
+### Setup
+1. Create a PostHog project at [app.posthog.com](https://app.posthog.com).
+2. Add your **Project API Key** to `.env.local`:
+   ```env
+   NEXT_PUBLIC_POSTHOG_KEY=your_key_here
+   NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com (optional)
+   ```
+3. (Optional) Analytics are skipped during local development if the key is missing.
 
 ## 🎨 Creative Prompts
 
