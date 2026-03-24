@@ -1,7 +1,7 @@
 import { DAILY_PROMPT, SUPPORTING_COPY } from "@/lib/constants";
 import { getTodayPrompt } from "@/app/actions/submissions";
 import { HomeHero } from "@/components/HomeHero";
-import Image from "next/image";
+import { ParallaxFooter } from "@/components/ParallaxFooter";
 
 export const dynamic = 'force-dynamic';
 
@@ -19,16 +19,7 @@ export default async function Home() {
         prompt={displayPrompt} 
         supportingCopy={SUPPORTING_COPY} 
       />
-      
-      <div className="fixed bottom-0 left-0 right-0 z-10 w-full h-[700px] pointer-events-none">
-        <Image 
-          src="/bg.png" 
-          alt="Background Floor" 
-          fill 
-          className="object-cover object-bottom"
-          priority
-        />
-      </div>
+      <ParallaxFooter />
     </>
   );
 }
