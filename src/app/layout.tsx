@@ -72,10 +72,10 @@ export default function RootLayout({
           <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 -z-40 w-full h-[400px] pointer-events-none">
+        <div className="fixed bottom-0 left-0 right-0 z-10 w-full h-[400px] pointer-events-none">
           <Image 
             src="/bg.png" 
-            alt="Background" 
+            alt="Background Floor" 
             fill 
             className="object-cover object-bottom"
             priority
