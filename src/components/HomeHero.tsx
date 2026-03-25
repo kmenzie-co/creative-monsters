@@ -38,7 +38,7 @@ export function HomeHero({ prompt, supportingCopy }: HomeHeroProps) {
               <Sparkles className="h-4 w-4" />
               <span>Today&apos;s Creative Challenge</span>
             </div>
-            
+
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8">
               {prompt.title.split(" ").map((word, i) => (
                 <span key={i} className={i % 2 === 0 ? "text-monster-blue" : "text-monster-pink"}>
@@ -46,7 +46,7 @@ export function HomeHero({ prompt, supportingCopy }: HomeHeroProps) {
                 </span>
               ))}
             </h1>
-            
+
             <p className="text-lg sm:text-xl text-gray-600 mb-12 leading-relaxed">
               {prompt.description}
             </p>
@@ -57,9 +57,9 @@ export function HomeHero({ prompt, supportingCopy }: HomeHeroProps) {
                 className="group relative flex items-center gap-3 rounded-full bg-monster-blue px-8 py-4 text-xl font-bold text-white shadow-xl shadow-monster-blue/20 transition-all hover:scale-105 hover:bg-monster-blue/90 active:scale-95"
               >
                 <Camera className="h-6 w-6 transition-transform group-hover:rotate-12" />
-                <span>Show your art!</span>
+                <span>Share your art!</span>
               </Link_Next>
-              
+
               <Link_Next
                 href="/gallery"
                 className="flex items-center gap-2 px-8 py-4 text-lg font-medium text-monster-pink hover:text-monster-pink/80 transition-colors"
