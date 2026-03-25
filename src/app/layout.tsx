@@ -19,7 +19,7 @@ const fredoka = Fredoka({
 });
 
 export const metadata: Metadata = {
-  title: "Creative Monsters | Show Your Creation!",
+  title: "Creative Monsters | Share Your Creation!",
   description: "A magical place for kids to share their daily creations.",
   icons: {
     icon: "/icon.png",
@@ -44,24 +44,24 @@ export default function RootLayout({
           <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-md transform-gpu backface-hidden">
             <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
               <Link href="/" className="group flex items-center gap-2">
-                <Image 
-                  src="/logo.png" 
-                  alt="Creative Monsters" 
-                  width={180} 
-                  height={40} 
+                <Image
+                  src="/logo.png"
+                  alt="Creative Monsters"
+                  width={180}
+                  height={40}
                   className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
                   priority
                 />
               </Link>
               <nav className="flex items-center gap-4 sm:gap-6">
-                <Link 
-                  href="/gallery" 
+                <Link
+                  href="/gallery"
                   className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-pink transition-colors"
                 >
                   Gallery
                 </Link>
-                <Link 
-                  href="/upload" 
+                <Link
+                  href="/upload"
                   className="rounded-full bg-monster-blue px-4 py-1.5 text-sm sm:text-base font-medium text-white shadow-lg shadow-monster-blue/20 hover:bg-monster-blue/90 transition-all hover:scale-105 active:scale-95"
                 >
                   Share your art
@@ -75,11 +75,11 @@ export default function RootLayout({
           </main>
 
           <footer className="mt-auto pointer-events-none overflow-visible">
-             <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
-                <div className="blob-animation absolute -top-[10%] -left-[10%] h-[800px] w-[800px] rounded-full bg-monster-blue/10 blur-3xl" />
-                <div className="blob-animation absolute top-[20%] -right-[10%] h-[600px] w-[600px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
-                <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
-              </div>
+            <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+              <div className="blob-animation absolute -top-[10%] -left-[10%] h-[800px] w-[800px] rounded-full bg-monster-blue/10 blur-3xl" />
+              <div className="blob-animation absolute top-[20%] -right-[10%] h-[600px] w-[600px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
+              <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
+            </div>
           </footer>
           <Analytics />
         </PostHogProvider>
