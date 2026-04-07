@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Calendar, Tag, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { ParallaxFooter } from "@/components/ParallaxFooter";
+import ReactMarkdown from "react-markdown";
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -86,11 +87,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                </div>
             </div>
           </aside>
-
           {/* Main Content */}
           <div className="flex-1 overflow-hidden">
             <div className="prose prose-lg max-w-none text-gray-700 prose-headings:font-display prose-headings:font-bold prose-headings:text-gray-900 prose-img:rounded-3xl prose-a:text-monster-blue prose-strong:text-gray-900 font-serif leading-relaxed">
-               <div dangerouslySetInnerHTML={{ __html: post.body_markdown.split('\n\n').map((p: string) => `<p>${p}</p>`).join('') }} />
+               <ReactMarkdown>{post.body_markdown}</ReactMarkdown>
             </div>
           </div>
 
