@@ -4,8 +4,9 @@ import { Calendar, Tag, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { ParallaxFooter } from "@/components/ParallaxFooter";
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
