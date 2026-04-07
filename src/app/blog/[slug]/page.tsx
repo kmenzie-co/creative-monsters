@@ -84,14 +84,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     ))}
                   </div>
                </div>
-
-               <div className="rounded-2xl bg-monster-blue/5 p-6 border border-monster-blue/10">
-                  <p className="text-sm font-medium text-monster-blue mb-4">Want more creative fun?</p>
-                  <p className="text-xs text-gray-600 mb-6 leading-relaxed">Join the Creative Monsters community for weekly art blasts!</p>
-                  <button className="w-full rounded-xl bg-monster-blue px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-monster-blue/20 transition-transform hover:scale-105 active:scale-95">
-                    Sign Up Free
-                  </button>
-               </div>
             </div>
           </aside>
 
