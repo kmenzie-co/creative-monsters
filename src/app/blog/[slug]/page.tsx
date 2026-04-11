@@ -28,28 +28,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           alt={post.hero_image_alt}
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
         <div className="absolute bottom-12 left-0 w-full">
           <div className="container mx-auto px-4">
             <Link
               href="/blog"
-              className="mb-8 flex items-center gap-2 text-sm font-bold text-white transition-transform hover:-translate-x-2"
+              className="mb-8 flex items-center gap-2 text-sm font-bold text-white transition-transform hover:-translate-x-2 drop-shadow-md"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-4 w-4 shadow-black" />
               Creation Station
             </Link>
 
             <div className="flex flex-col gap-6">
                <div className="flex flex-wrap gap-3">
                   {post.category_tags.map((tag: string) => (
-                    <span key={tag} className="rounded-full bg-white/20 px-4 py-1.5 text-xs font-bold text-white backdrop-blur-sm uppercase tracking-wider border border-white/20 shadow-sm">
+                    <span key={tag} className="rounded-full bg-black/40 px-4 py-1.5 text-xs font-bold text-white backdrop-blur-md uppercase tracking-wider border border-white/20 shadow-lg">
                       {tag}
                     </span>
                   ))}
                </div>
 
-               <h1 className="max-w-4xl text-4xl font-display font-black text-white sm:text-5xl lg:text-7xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] leading-tight">
+               <h1 className="max-w-4xl text-4xl font-display font-black text-white sm:text-5xl lg:text-7xl [text-shadow:0_4px_12px_rgba(0,0,0,0.8)] leading-tight">
                  {post.title}
                </h1>
             </div>
