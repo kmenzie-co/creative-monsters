@@ -51,3 +51,19 @@
   66% { transform: translate(-20px, 20px) scale(0.9); }
   100% { transform: translate(0px, 0px) scale(1); }
 }
+
+@layer utilities {
+  /* Editorial Blog Typography Upgrades */
+  .prose h2 {
+    @apply text-3xl sm:text-4xl mt-16 mb-8 text-gray-900 border-none !important;
+  }
+  .prose h3 {
+    @apply text-2xl sm:text-3xl mt-12 mb-6 text-gray-800 !important;
+  }
+  .prose p {
+    @apply mb-10 leading-relaxed text-lg text-gray-600 !important;
+  }
+  .prose strong {
+    @apply text-gray-900 font-bold !important;
+  }
+}

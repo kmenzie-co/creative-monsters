@@ -35,23 +35,6 @@
   },
   {
     "slug": "diy-mothers-day-cards",
-    "title": "Protect the Planet: A Monster Guide",
-    "meta_description": "Explore Protect the Planet: A Monster Guide and unleash your child's imagination with this week's seasonal post!",
-    "post_type": "seasonal",
-    "category_tags": [
-      "seasonal",
-      "creative monsters",
-      "art",
-      "earth day"
-    ],
-    "body_markdown": "At Creative Monsters, we believe that every child is an artist waiting to be discovered. This week, we're celebrating **Protect the Planet: A Monster Guide**! \n\n### Why it Matters \nCreativity isn't just about making art; it's about solving problems and seeing the world in new ways. Our blue monster friend is here to guide the way through this batch of activities. \n\n### How to Get Started \n- Find a comfortable spot with plenty of sunlight. \n- Gather recycled items, paper, and bright markers. \n- Let your child take the lead! \n\nStay tuned for more weekly batches of creative spark!",
-    "hero_image_path": "/assets/blog/diy-mothers-day-cards.png",
-    "hero_image_alt": "A cute monster doing Protect the Planet: A Monster Guide",
-    "publish_date": "2026-04-20T07:00:00.000Z",
-    "status": "scheduled"
-  },
-  {
-    "slug": "nature-play-benefits-kids",
     "title": "DIY Mother's Day Cards for Kids",
     "meta_description": "Explore DIY Mother's Day Cards for Kids and unleash your child's imagination with this week's seasonal post!",
     "post_type": "seasonal",
@@ -59,11 +42,28 @@
       "seasonal",
       "creative monsters",
       "art",
-      "mother's day"
+      "earth day"
     ],
     "body_markdown": "At Creative Monsters, we believe that every child is an artist waiting to be discovered. This week, we're celebrating **DIY Mother's Day Cards for Kids**! \n\n### Why it Matters \nCreativity isn't just about making art; it's about solving problems and seeing the world in new ways. Our blue monster friend is here to guide the way through this batch of activities. \n\n### How to Get Started \n- Find a comfortable spot with plenty of sunlight. \n- Gather recycled items, paper, and bright markers. \n- Let your child take the lead! \n\nStay tuned for more weekly batches of creative spark!",
-    "hero_image_path": "/assets/blog/nature-play-benefits-kids.png",
+    "hero_image_path": "/assets/blog/diy-mothers-day-cards.png",
     "hero_image_alt": "A cute monster doing DIY Mother's Day Cards for Kids",
+    "publish_date": "2026-04-20T07:00:00.000Z",
+    "status": "scheduled"
+  },
+  {
+    "slug": "nature-play-benefits-kids",
+    "title": "Protect the Planet: A Monster Guide",
+    "meta_description": "Explore Protect the Planet: A Monster Guide and unleash your child's imagination with this week's seasonal post!",
+    "post_type": "seasonal",
+    "category_tags": [
+      "seasonal",
+      "creative monsters",
+      "art",
+      "mother's day"
+    ],
+    "body_markdown": "At Creative Monsters, we believe that every child is an artist waiting to be discovered. This week, we're celebrating **Protect the Planet: A Monster Guide**! \n\n### Why it Matters \nCreativity isn't just about making art; it's about solving problems and seeing the world in new ways. Our blue monster friend is here to guide the way through this batch of activities. \n\n### How to Get Started \n- Find a comfortable spot with plenty of sunlight. \n- Gather recycled items, paper, and bright markers. \n- Let your child take the lead! \n\nStay tuned for more weekly batches of creative spark!",
+    "hero_image_path": "/assets/blog/nature-play-benefits-kids.png",
+    "hero_image_alt": "A cute monster doing Protect the Planet: A Monster Guide",
     "publish_date": "2026-04-27T07:00:00.000Z",
     "status": "scheduled"
   },
