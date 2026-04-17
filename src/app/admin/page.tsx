@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Lock, ShieldCheck, CheckCircle2, XCircle, Clock, Loader2 } from "lucide-react";
 import { getPendingSubmissions, approveMonster, rejectMonster } from "@/app/actions/submissions";
 import posthog from "posthog-js";
+import { AdminClassManager } from "@/components/AdminClassManager";
 
 export default function AdminPage() {
   const [password, setPassword] = useState("");
@@ -69,6 +70,8 @@ export default function AdminPage() {
     }
   };
 
+  const [activeTab, setActiveTab] = useState<'submissions' | 'classes'>('submissions');
+
   if (!isAuthenticated) {
     return (
       <div className="container mx-auto px-4 py-24 flex flex-col items-center">
@@ -107,23 +110,41 @@ export default function AdminPage() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <div className="mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div>
-          <h1 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-2">
-            Moderation Station 🛡️
-          </h1>
-          <p className="text-gray-600">
-            {submissions.length} creations waiting to be reviewed.
-          </p>
-        </div>
+      {/* Top Nav Tabs */}
+      <div className="flex space-x-4 mb-12 border-b border-gray-200 pb-4">
         <button
-          onClick={fetchSubmissions}
-          className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+          onClick={() => setActiveTab('submissions')}
+          className={`px-4 py-2 font-bold rounded-lg transition-colors ${activeTab === 'submissions' ? 'bg-monster-blue text-white' : 'text-gray-500 hover:bg-gray-100'}`}
         >
-          <Clock className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
-          Refresh List
+          Art Submissions
+        </button>
+        <button
+          onClick={() => setActiveTab('classes')}
+          className={`px-4 py-2 font-bold rounded-lg transition-colors ${activeTab === 'classes' ? 'bg-monster-blue text-white' : 'text-gray-500 hover:bg-gray-100'}`}
+        >
+          Classes Setup
         </button>
       </div>
+
+      {activeTab === 'submissions' && (
+        <>
+          <div className="mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-2">
+                Moderation Station 🛡️
+              </h1>
+              <p className="text-gray-600">
+                {submissions.length} creations waiting to be reviewed.
+              </p>
+            </div>
+            <button
+              onClick={fetchSubmissions}
+              className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+            >
+              <Clock className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+              Refresh List
+            </button>
+          </div>
 
       {isLoading ? (
           <p>Loading submissions...</p>
@@ -184,6 +205,12 @@ export default function AdminPage() {
             ))}
           </AnimatePresence>
         </div>
+      )}
+      </>
+      )}
+
+      {activeTab === 'classes' && (
+        <AdminClassManager />
       )}
     </div>
   );

@@ -55,15 +55,15 @@
 @layer utilities {
   /* Editorial Blog Typography Upgrades - High Specificity Overrides */
   .prose :where(h2):not(:where([class~="not-prose"] *)) {
-    @apply text-3xl sm:text-4xl mt-16 mb-8 text-gray-900 border-none !important;
+    @apply !text-3xl sm:!text-4xl !mt-16 !mb-8 !text-gray-900 !border-none;
   }
   .prose :where(h3):not(:where([class~="not-prose"] *)) {
-    @apply text-2xl sm:text-3xl mt-12 mb-6 text-gray-800 !important;
+    @apply !text-2xl sm:!text-3xl !mt-12 !mb-6 !text-gray-800;
   }
   .prose :where(p):not(:where([class~="not-prose"] *)) {
-    @apply mb-10 leading-relaxed text-lg text-gray-600 !important;
+    @apply !mb-10 !leading-relaxed !text-lg !text-gray-600;
   }
   .prose :where(strong):not(:where([class~="not-prose"] *)) {
-    @apply text-gray-900 font-bold !important;
+    @apply !text-gray-900 !font-bold;
   }
 }

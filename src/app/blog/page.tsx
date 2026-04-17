@@ -2,6 +2,8 @@ import { getPublishedPosts } from "@/app/actions/blog";
 import { BlogCard } from "@/components/BlogCard";
 import { ParallaxFooter } from "@/components/ParallaxFooter";
 
+export const revalidate = 60;
+
 export default async function BlogPage() {
   const posts = await getPublishedPosts();
 

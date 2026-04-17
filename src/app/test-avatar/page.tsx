@@ -1,17 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  generateAvatarVideo, 
-  pollAvatarVideoStatus, 
-  stitchClassVideo, 
+import {
+  generateAvatarVideo,
+  pollAvatarVideoStatus,
+  stitchClassVideo,
   pollStitchStatus,
-  AvatarVideoStatus 
+  AvatarVideoStatus
 } from '@/app/actions/avatarVideos';
 
 export default function TestAvatarPage() {
   const [childName, setChildName] = useState('Kevin');
-  
+
   // Overall Pipeline State
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export default function TestAvatarPage() {
 
   const handleGenerate = async () => {
     if (!childName.trim()) return;
-    
+
     setIsProcessing(true);
     setError(null);
     setFinalVideoUrl(null);
@@ -38,8 +38,8 @@ export default function TestAvatarPage() {
     try {
       // Launch both Intro and Outro in parallel
       const [introRes, outroRes] = await Promise.all([
-        generateAvatarVideo(childName, 'intro'),
-        generateAvatarVideo(childName, 'outro')
+        generateAvatarVideo(childName, 'intro', 'intro', 'Hello [name]!'), // added dummy args to match signature
+        generateAvatarVideo(childName, 'outro', 'outro', 'Goodbye [name]!')
       ]);
 
       if (introRes.status === 'failed') throw new Error(introRes.error || 'Failed intro generation');
@@ -150,8 +150,8 @@ export default function TestAvatarPage() {
         
         <div className="mb-6">
           <label className="block text-sm font-medium text-neutral-400 mb-2">Child Name</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             value={childName}
             onChange={(e) => setChildName(e.target.value)}
             className="w-full px-4 py-3 bg-neutral-950 border border-neutral-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -176,19 +176,19 @@ export default function TestAvatarPage() {
             <div className="flex justify-between text-sm">
               <span className="text-neutral-400">Runway Intro:</span>
               <span className={
-                introStatus === 'succeeded' ? 'text-green-400' : 
+                introStatus === 'succeeded' ? 'text-green-400' :
                 introStatus === 'failed' ? 'text-red-400 animate-pulse' : 'text-yellow-400 animate-pulse'
               }>
                 {introStatus}
               </span>
             </div>
           )}
-          
+
           {outroStatus !== 'idle' && (
             <div className="flex justify-between text-sm">
               <span className="text-neutral-400">Runway Outro:</span>
               <span className={
-                outroStatus === 'succeeded' ? 'text-green-400' : 
+                outroStatus === 'succeeded' ? 'text-green-400' :
                 outroStatus === 'failed' ? 'text-red-400 animate-pulse' : 'text-yellow-400 animate-pulse'
               }>
                 {outroStatus}
@@ -200,7 +200,7 @@ export default function TestAvatarPage() {
             <div className="flex justify-between text-sm">
               <span className="text-neutral-400">FFmpeg Stitch:</span>
               <span className={
-                stitchStatus === 'succeeded' ? 'text-green-400' : 
+                stitchStatus === 'succeeded' ? 'text-green-400' :
                 stitchStatus === 'failed' ? 'text-red-400 animate-pulse' : 'text-blue-400 animate-pulse'
               }>
                 {stitchStatus}
@@ -212,11 +212,11 @@ export default function TestAvatarPage() {
         {finalVideoUrl && (
           <div className="mt-6">
             <p className="text-green-400 font-semibold mb-3 text-center">Video Ready!</p>
-            <video 
-              src={finalVideoUrl} 
-              controls 
-              autoPlay 
-              className="w-full rounded-lg shadow-lg border border-neutral-700 aspect-video object-cover" 
+            <video
+              src={finalVideoUrl}
+              controls
+              autoPlay
+              className="w-full rounded-lg shadow-lg border border-neutral-700 aspect-video object-cover"
             />
           </div>
         )}

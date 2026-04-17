@@ -21,10 +21,10 @@ export default async function ClassesPage() {
           {classes.map((c: any) => (
             <Link key={c.id} href={`/classes/${c.id}`} className="group relative block overflow-hidden rounded-3xl shadow-lg border border-gray-100 bg-white hover:shadow-xl hover:-translate-y-1 transition-all">
               <div className="aspect-video relative overflow-hidden bg-gray-100">
-                <img 
-                  src={c.cover_art_url} 
-                  alt={c.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                <img
+                  src={c.cover_art_url}
+                  alt={c.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                 <div className="absolute bottom-4 left-4 right-4">

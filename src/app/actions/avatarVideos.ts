@@ -75,8 +75,8 @@ export async function pollAvatarVideoStatus(taskId: string): Promise<AvatarVideo
         .eq('runway_task_id', taskId);
 
       return { status: 'succeeded', videoUrl };
-    } 
-    
+    }
+
     if (taskData.status === 'FAILED' || taskData.status === 'CANCELLED') {
       await supabaseAdmin
         .from('avatar_videos')
@@ -96,10 +96,10 @@ export async function pollAvatarVideoStatus(taskId: string): Promise<AvatarVideo
  * Commences the FFmpeg stitch process in the background. Tracks state in Supabase.
  */
 export async function stitchClassVideo(
-  childName: string, 
-  classId: string, 
-  introUrl: string, 
-  outroUrl: string, 
+  childName: string,
+  classId: string,
+  introUrl: string,
+  outroUrl: string,
   coreVideoUrl: string
 ): Promise<AvatarVideoResult> {
   const finalKey = `${childName.trim().toLowerCase()}-${classId}-final`;

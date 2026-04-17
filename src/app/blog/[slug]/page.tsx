@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ParallaxFooter } from "@/components/ParallaxFooter";
 import ReactMarkdown from "react-markdown";
 
+export const revalidate = 60;
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
