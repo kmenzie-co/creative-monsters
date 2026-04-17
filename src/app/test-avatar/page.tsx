@@ -102,7 +102,13 @@ export default function TestAvatarPage() {
     if (introStatus === 'succeeded' && outroStatus === 'succeeded' && stitchStatus === 'idle') {
       if (introData.url && outroData.url) {
         setStitchStatus('pending');
-        stitchClassVideo(childName, introData.url, outroData.url)
+        stitchClassVideo(
+          childName,
+          'test_class_id',
+          introData.url,
+          outroData.url,
+          '/videos/core.mp4'
+        )
           .then(res => {
             if (res.status === 'failed') {
               setStitchStatus('failed');
@@ -126,7 +132,7 @@ export default function TestAvatarPage() {
   useEffect(() => {
     if (stitchStatus === 'pending') {
       const interval = setInterval(async () => {
-        const res = await pollStitchStatus(childName);
+        const res = await pollStitchStatus(childName, 'test_class_id');
         if (res.status === 'succeeded') {
           setStitchStatus('succeeded');
           setFinalVideoUrl(res.videoUrl!);
