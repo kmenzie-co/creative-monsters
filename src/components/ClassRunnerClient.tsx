@@ -176,7 +176,7 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
                 controls 
                 autoPlay 
                 onEnded={handleVideoEnded}
-                className="w-full h-full object-contain" 
+                className={`w-full h-full ${playlistIndex === 1 ? 'object-contain' : 'object-cover'}`} 
               />
             </div>
             <div className="max-w-3xl mx-auto">
