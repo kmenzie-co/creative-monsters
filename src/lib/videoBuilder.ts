@@ -81,9 +81,9 @@ export async function concatenateClassVideo(
       .input(tempCorePath)
       .input(tempOutroPath)
       .complexFilter([
-        '[0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1[v0]',
+        '[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,setsar=1[v0]',
         '[1:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1[v1]',
-        '[2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1[v2]',
+        '[2:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,setsar=1[v2]',
         '[v0][0:a][v1][1:a][v2][2:a]concat=n=3:v=1:a=1[v][a]'
       ])
       .map('[v]')
