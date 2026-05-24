@@ -67,6 +67,12 @@ export default function RootLayout({
                   Blog
                 </Link>
                 <Link
+                  href="/classes"
+                  className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-orange transition-colors"
+                >
+                  Classes
+                </Link>
+                <Link
                   href="/upload"
                   className="rounded-full bg-monster-blue px-4 py-1.5 text-sm sm:text-base font-medium text-white shadow-lg shadow-monster-blue/20 hover:bg-monster-blue/90 transition-all hover:scale-105 active:scale-95"
                 >

@@ -7,6 +7,7 @@ export interface RunwayAvatarVideoRequest {
   speech: {
     type: string;
     text: string;
+    voice?: string;
   };
 }
 
@@ -39,6 +40,7 @@ export async function startAvatarVideo(customScript: string): Promise<string> {
     speech: {
       type: 'text',
       text: customScript,
+      voice: 'LJZgHeNEei2iNcVe8Thi',
     },
   };
 

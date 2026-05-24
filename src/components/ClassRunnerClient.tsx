@@ -6,8 +6,6 @@ import { PlayCircle, Loader2 } from 'lucide-react';
 import { 
   generateAvatarVideo, 
   pollAvatarVideoStatus, 
-  stitchClassVideo, 
-  pollStitchStatus,
   AvatarVideoStatus 
 } from '@/app/actions/avatarVideos';
 
@@ -21,7 +19,8 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
   // Individual Stage States
   const [introStatus, setIntroStatus] = useState<AvatarVideoStatus | 'idle'>('idle');
   const [outroStatus, setOutroStatus] = useState<AvatarVideoStatus | 'idle'>('idle');
-  const [stitchStatus, setStitchStatus] = useState<AvatarVideoStatus | 'idle'>('idle');
+  
+  const [playlistIndex, setPlaylistIndex] = useState(0);
 
   const [introData, setIntroData] = useState<{ id?: string, url?: string }>({});
   const [outroData, setOutroData] = useState<{ id?: string, url?: string }>({});
@@ -34,7 +33,7 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
     setError(null);
     setIntroStatus('pending');
     setOutroStatus('pending');
-    setStitchStatus('idle');
+    setPlaylistIndex(0);
 
     try {
       const [introRes, outroRes] = await Promise.all([
@@ -97,52 +96,20 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
     }
   }, [outroStatus, outroData.id]);
 
-  // Trigger Stitching once both are ready
+  // Trigger Ready once both are generated
   useEffect(() => {
-    if (introStatus === 'succeeded' && outroStatus === 'succeeded' && stitchStatus === 'idle') {
-      if (introData.url && outroData.url) {
-        setStitchStatus('pending');
-        stitchClassVideo(childName, classData.id, introData.url, outroData.url, classData.core_video_url)
-          .then(res => {
-            if (res.status === 'failed') {
-              setStitchStatus('failed');
-              setError(res.error || 'Failed to start stitching process');
-              setPhase('input');
-            } else if (res.status === 'succeeded' && res.videoUrl) {
-               setStitchStatus('succeeded');
-               setFinalVideoUrl(res.videoUrl);
-               setPhase('ready');
-            }
-          })
-          .catch(err => {
-            setStitchStatus('failed');
-            setError(err.message);
-            setPhase('input');
-          });
-      }
+    if (introStatus === 'succeeded' && outroStatus === 'succeeded' && introData.url && outroData.url) {
+      setPhase('ready');
     }
-  }, [introStatus, outroStatus, stitchStatus, introData.url, outroData.url, childName, classData]);
+  }, [introStatus, outroStatus, introData.url, outroData.url]);
 
-  // Poll Stitching
-  useEffect(() => {
-    if (stitchStatus === 'pending') {
-      const interval = setInterval(async () => {
-        const res = await pollStitchStatus(childName, classData.id);
-        if (res.status === 'succeeded') {
-          setStitchStatus('succeeded');
-          setFinalVideoUrl(res.videoUrl!);
-          setPhase('ready');
-          clearInterval(interval);
-        } else if (res.status === 'failed') {
-          setStitchStatus('failed');
-          setError(res.error || 'FFmpeg failed to stitch videos together.');
-          setPhase('input');
-          clearInterval(interval);
-        }
-      }, 3000);
-      return () => clearInterval(interval);
+  const playlist = [introData.url, classData.core_video_url, outroData.url];
+
+  const handleVideoEnded = () => {
+    if (playlistIndex < playlist.length - 1) {
+      setPlaylistIndex(prev => prev + 1);
     }
-  }, [stitchStatus, childName, classData]);
+  };
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -199,15 +166,20 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
             <div className="mt-8 flex flex-col items-center gap-2 text-sm text-gray-400">
               <p>Intro {introStatus === 'pending' ? <Loader2 className="inline w-3 h-3 animate-spin"/> : introStatus}</p>
               <p>Outro {outroStatus === 'pending' ? <Loader2 className="inline w-3 h-3 animate-spin"/> : outroStatus}</p>
-              <p>Stitching {stitchStatus === 'pending' ? <Loader2 className="inline w-3 h-3 animate-spin"/> : stitchStatus}</p>
             </div>
           </motion.div>
         )}
 
-        {phase === 'ready' && finalVideoUrl && (
+        {phase === 'ready' && playlist[playlistIndex] && (
           <motion.div key="ready" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full pb-20">
             <div className="aspect-video w-full max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-black mb-8 border border-gray-200">
-              <video src={finalVideoUrl} controls autoPlay className="w-full h-full object-contain" />
+              <video 
+                src={playlist[playlistIndex]} 
+                controls 
+                autoPlay 
+                onEnded={handleVideoEnded}
+                className="w-full h-full object-contain" 
+              />
             </div>
             <div className="max-w-3xl mx-auto">
               <h1 className="text-4xl font-display font-bold text-gray-900 mb-4">{classData.title}</h1>
