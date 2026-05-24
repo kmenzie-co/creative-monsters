@@ -152,21 +152,19 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
               <div className="absolute inset-0 bg-monster-blue/20 mix-blend-overlay" />
             </div>
             
-            <motion.h2 
-              animate={{ opacity: [0.5, 1, 0.5] }} 
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="text-3xl font-display font-bold text-monster-blue mb-2"
-            >
-              We're preparing your class...
-            </motion.h2>
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <Loader2 className="w-8 h-8 animate-spin text-monster-blue" />
+              <motion.h2 
+                animate={{ opacity: [0.5, 1, 0.5] }} 
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="text-3xl font-display font-bold text-monster-blue"
+              >
+                We're preparing your class...
+              </motion.h2>
+            </div>
             <p className="text-gray-500">
               Our teachers are pulling up the lesson plan just for {childName}!
             </p>
-
-            <div className="mt-8 flex flex-col items-center gap-2 text-sm text-gray-400">
-              <p>Intro {introStatus === 'pending' ? <Loader2 className="inline w-3 h-3 animate-spin"/> : introStatus}</p>
-              <p>Outro {outroStatus === 'pending' ? <Loader2 className="inline w-3 h-3 animate-spin"/> : outroStatus}</p>
-            </div>
           </motion.div>
         )}
 
