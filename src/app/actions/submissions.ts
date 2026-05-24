@@ -5,7 +5,7 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { revalidatePath } from "next/cache";
 import { sendSubmissionNotification } from "@/lib/email";
 
-export async function saveSubmission(imageUrl: string, monsterName: string, creatorNickname: string) {
+export async function saveSubmission(imageUrl: string, monsterName: string, creatorNickname: string, classId?: string) {
   try {
     if (!imageUrl || !monsterName) {
       return { error: "Missing required fields!" };
@@ -19,6 +19,7 @@ export async function saveSubmission(imageUrl: string, monsterName: string, crea
           monster_name: monsterName,
           creator_nickname: creatorNickname || null,
           status: "pending",
+          class_id: classId || null,
         },
       ])
       .select()
@@ -140,4 +141,20 @@ export async function getTodayPrompt() {
     console.error("Failed to fetch today's prompt:", err);
     return null;
   }
+}
+
+export async function getApprovedSubmissionsForClass(classId: string) {
+  const { data, error } = await supabaseAdmin
+    .from("submissions")
+    .select("*")
+    .eq("status", "approved")
+    .eq("class_id", classId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Fetch approved submissions for class error:", error);
+    return [];
+  }
+
+  return data;
 }

@@ -174,8 +174,15 @@ export default function AdminPage() {
                     alt={monster.monster_name}
                     className="h-full w-full object-contain p-2"
                   />
-                  <div className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-monster-blue shadow-sm backdrop-blur-sm">
-                    Pending
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    <div className="rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-monster-blue shadow-sm backdrop-blur-sm">
+                      Pending
+                    </div>
+                    {monster.class_id && (
+                      <div className="rounded-full bg-monster-blue px-3 py-1 text-xs font-bold text-white shadow-sm backdrop-blur-sm">
+                        Class Art
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="p-6 flex-1 flex flex-col">

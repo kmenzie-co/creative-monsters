@@ -9,13 +9,15 @@ import Link from "next/link";
 import posthog from "posthog-js";
 
 interface UploadFormProps {
-  prompt: {
+  prompt?: {
     title: string;
     description: string;
   };
+  classId?: string;
+  classTitle?: string;
 }
 
-export function UploadForm({ prompt }: UploadFormProps) {
+export function UploadForm({ prompt, classId, classTitle }: UploadFormProps) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [monsterName, setMonsterName] = useState("");
@@ -58,7 +60,9 @@ export function UploadForm({ prompt }: UploadFormProps) {
 
     // Track upload start
     posthog.capture("upload_started", {
-      prompt_text: prompt.title,
+      prompt_text: prompt?.title || null,
+      class_id: classId || null,
+      class_title: classTitle || null,
       has_artwork_name: !!monsterName,
       has_creator_nickname: !!nickname
     });
@@ -86,14 +90,16 @@ export function UploadForm({ prompt }: UploadFormProps) {
         .getPublicUrl(filePath);
 
       // 3. Save submission record in DB (Server Action)
-      const result = await saveSubmission(publicUrl, monsterName, nickname);
+      const result = await saveSubmission(publicUrl, monsterName, nickname, classId);
       
       if (result?.error) {
         setError(result.error);
       } else {
         // Track upload completion
         posthog.capture("upload_completed", {
-          prompt_text: prompt.title,
+          prompt_text: prompt?.title || null,
+          class_id: classId || null,
+          class_title: classTitle || null,
           has_artwork_name: !!monsterName,
           has_creator_nickname: !!nickname,
           submission_id: result?.id
@@ -146,19 +152,40 @@ export function UploadForm({ prompt }: UploadFormProps) {
       className="space-y-12"
     >
       {/* Prompt Reminder Card */}
-      <div className="rounded-3xl bg-monster-blue/5 border-2 border-monster-blue/10 p-6 sm:p-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-4 -mt-4 h-24 w-24 rounded-full bg-monster-blue/5 blur-2xl" />
-        <div className="relative flex items-start gap-4">
-          <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-monster-blue text-white shadow-lg shadow-monster-blue/20">
-            <Sparkles className="h-5 w-5" />
-          </div>
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-monster-blue/60 mb-1">Today&apos;s Challenge</h3>
-            <h2 className="text-2xl font-display font-bold text-gray-900 mb-2">{prompt.title}</h2>
-            <p className="text-gray-600 leading-relaxed">{prompt.description}</p>
+      {prompt && (
+        <div className="rounded-3xl bg-monster-blue/5 border-2 border-monster-blue/10 p-6 sm:p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 -mr-4 -mt-4 h-24 w-24 rounded-full bg-monster-blue/5 blur-2xl" />
+          <div className="relative flex items-start gap-4">
+            <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-monster-blue text-white shadow-lg shadow-monster-blue/20">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-monster-blue/60 mb-1">Today&apos;s Challenge</h3>
+              <h2 className="text-2xl font-display font-bold text-gray-900 mb-2">{prompt.title}</h2>
+              <p className="text-gray-600 leading-relaxed">{prompt.description}</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Class Artwork Card */}
+      {classId && classTitle && (
+        <div className="rounded-3xl bg-monster-blue/5 border-2 border-monster-blue/10 p-6 sm:p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 -mr-4 -mt-4 h-24 w-24 rounded-full bg-monster-blue/5 blur-2xl" />
+          <div className="relative flex items-start gap-4">
+            <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-monster-blue text-white shadow-lg shadow-monster-blue/20">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold uppercase tracking-wider text-monster-blue/60 mb-1">Share Art</h3>
+              <h2 className="text-2xl font-display font-bold text-gray-900 mb-2">Upload Your Creation!</h2>
+              <p className="text-gray-600 leading-relaxed">
+                Took a photo of your art from <strong>{classTitle}</strong>? Share it here to send it to the gallery for approval!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* File Picker */}

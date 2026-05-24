@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS public.submissions (
   monster_name TEXT NOT NULL,
   creator_nickname TEXT,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
+  class_id UUID,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -119,3 +120,6 @@ ON CONFLICT (id) DO NOTHING;
 -- Optionally, if needed, enable public access policy to the bucket securely:
 -- CREATE POLICY "Public Access" ON storage.objects FOR SELECT USING ( bucket_id = 'Classes' );
 -- CREATE POLICY "Anon Insert" ON storage.objects FOR INSERT WITH CHECK ( bucket_id = 'Classes' );
+
+-- Add constraint linking submissions to classes
+ALTER TABLE public.submissions ADD CONSTRAINT fk_submissions_class FOREIGN KEY (class_id) REFERENCES public.classes(id) ON DELETE SET NULL;
