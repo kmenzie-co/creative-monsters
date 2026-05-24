@@ -183,7 +183,7 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
               <h1 className="text-4xl font-display font-bold text-gray-900 mb-4">{classData.title}</h1>
               <p className="text-xl text-gray-600 mb-8">{classData.description}</p>
               <div className="bg-monster-blue/5 border border-monster-blue/10 rounded-2xl p-6 text-monster-blue">
-                <p className="font-semibold text-lg">✨ Have fun creating, {childName}! Remember to share your art to the gallery when you're done!</p>
+                <p className="font-semibold text-lg">✨ Have fun creating, {childName}!</p>
               </div>
             </div>
           </motion.div>
