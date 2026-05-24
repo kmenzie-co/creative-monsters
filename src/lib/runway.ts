@@ -8,8 +8,11 @@ export interface RunwayAvatarVideoRequest {
     type: string;
     text: string;
     voice?: {
-      type: string;
-      voiceId: string;
+      type: 'preset';
+      presetId: string;
+    } | {
+      type: 'custom';
+      id: string;
     };
   };
 }
@@ -43,10 +46,12 @@ export async function startAvatarVideo(customScript: string): Promise<string> {
     speech: {
       type: 'text',
       text: customScript,
-      voice: {
-        type: 'elevenlabs',
-        voiceId: 'LJZgHeNEei2iNcVe8Thi',
-      },
+      // If voice is omitted, it defaults to the avatar's configured voice.
+      // Alternatively, you can use a Runway preset voice, e.g.:
+      // voice: {
+      //   type: 'preset',
+      //   presetId: 'clara',
+      // },
     },
   };
 
