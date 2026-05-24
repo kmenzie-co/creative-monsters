@@ -163,7 +163,7 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
               </motion.h2>
             </div>
             <p className="text-gray-500">
-              Our teachers are pulling up the lesson plan just for {childName}!
+              Fig is getting everything setup for you, {childName}!
             </p>
           </motion.div>
         )}
