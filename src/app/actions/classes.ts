@@ -74,3 +74,23 @@ export async function getClassById(id: string) {
   }
   return data;
 }
+
+export async function updateClassVideo(id: string, coreVideoUrl: string) {
+  try {
+    const { error } = await supabaseAdmin
+      .from('classes')
+      .update({ core_video_url: coreVideoUrl })
+      .eq('id', id);
+
+    if (error) {
+      console.error('Supabase DB Error updating Class video:', error);
+      return { error: `Failed to update class video: ${error.message}` };
+    }
+
+    revalidatePath('/admin');
+    revalidatePath('/classes');
+    return { success: true };
+  } catch (err: any) {
+    return { error: 'Unknown server error occurred' };
+  }
+}

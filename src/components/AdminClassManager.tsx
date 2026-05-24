@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Plus, Film, CheckCircle2, Loader2, X } from 'lucide-react';
-import { createClass, deleteClass, getClasses } from '@/app/actions/classes';
+import { createClass, deleteClass, getClasses, updateClassVideo } from '@/app/actions/classes';
 import { supabase } from '@/lib/supabase';
 
 export function AdminClassManager() {
@@ -20,6 +20,30 @@ export function AdminClassManager() {
   const [outroText, setOutroText] = useState('I had so much fun drawing with you today, [name]! I hope to see you again soon!');
   const [coverArtFile, setCoverArtFile] = useState<File | null>(null);
   const [videoFile, setVideoFile] = useState<File | null>(null);
+
+  const [uploadingClassId, setUploadingClassId] = useState<string | null>(null);
+
+  const handleReplaceVideo = async (classId: string, file: File | null) => {
+    if (!file) return;
+    
+    setUploadingClassId(classId);
+    setError(null);
+
+    try {
+      const newVideoUrl = await uploadToSupabase(file);
+      const res = await updateClassVideo(classId, newVideoUrl);
+
+      if (res.error) throw new Error(res.error);
+
+      alert('Class video replaced successfully!');
+      await fetchClasses();
+    } catch (err: any) {
+      console.error(err);
+      alert(`Failed to replace video: ${err.message}`);
+    } finally {
+      setUploadingClassId(null);
+    }
+  };
 
   const fetchClasses = async () => {
     setIsLoading(true);
@@ -182,9 +206,32 @@ export function AdminClassManager() {
                 <div className="p-4 flex-1 flex flex-col">
                   <h3 className="font-bold text-lg leading-tight mb-1">{c.title}</h3>
                   <p className="text-sm text-gray-500 line-clamp-2 flex-1">{c.description}</p>
-                  <button onClick={() => handleDelete(c.id)} className="mt-4 flex justify-center items-center gap-2 w-full py-2 bg-red-50 text-red-600 font-semibold text-sm rounded-lg hover:bg-red-100 transition">
-                    <Trash2 className="w-4 h-4" /> Delete
-                  </button>
+                  <div className="mt-4 flex gap-2">
+                    <label className="flex-1">
+                      <input 
+                        type="file" 
+                        accept="video/mp4,video/quicktime" 
+                        className="hidden" 
+                        disabled={uploadingClassId !== null}
+                        onChange={(e) => handleReplaceVideo(c.id, e.target.files?.[0] || null)}
+                      />
+                      <span className={`flex justify-center items-center gap-2 w-full py-2 bg-monster-blue/5 text-monster-blue font-semibold text-sm rounded-lg hover:bg-monster-blue/10 transition cursor-pointer select-none ${uploadingClassId !== null ? 'opacity-50 pointer-events-none' : ''}`}>
+                        {uploadingClassId === c.id ? (
+                          <><Loader2 className="w-4 h-4 animate-spin" /> Uploading...</>
+                        ) : (
+                          <><Film className="w-4 h-4" /> Replace Video</>
+                        )}
+                      </span>
+                    </label>
+                    <button 
+                      disabled={uploadingClassId !== null}
+                      onClick={() => handleDelete(c.id)} 
+                      className="flex justify-center items-center p-2 bg-red-50 text-red-600 font-semibold text-sm rounded-lg hover:bg-red-100 transition disabled:opacity-50"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             ))}
