@@ -76,13 +76,18 @@ export async function concatenateClassVideo(
   console.log(`[videoBuilder] Launching FFmpeg combination for ${childName}...`);
 
   return new Promise((resolve, reject) => {
-    const listFilePath = path.join(tempDir, `list_${finalFilename}.txt`);
-    const fileListContent = `file '${tempIntroPath}'\nfile '${tempCorePath}'\nfile '${tempOutroPath}'`;
-    fs.writeFileSync(listFilePath, fileListContent, 'utf-8');
-
     ffmpeg()
-      .input(listFilePath)
-      .inputOptions(['-f concat', '-safe 0'])
+      .input(tempIntroPath)
+      .input(tempCorePath)
+      .input(tempOutroPath)
+      .complexFilter([
+        '[0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1[v0]',
+        '[1:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1[v1]',
+        '[2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1[v2]',
+        '[v0][0:a][v1][1:a][v2][2:a]concat=n=3:v=1:a=1[v][a]'
+      ])
+      .map('[v]')
+      .map('[a]')
       .outputOptions([
         '-c:v libx264',
         '-c:a aac',
@@ -91,7 +96,7 @@ export async function concatenateClassVideo(
       ])
       .save(localOutputPath)
       .on('start', (cmd: string) => {
-        console.log(`[videoBuilder] FFmpeg stated with command: ${cmd}`);
+        console.log(`[videoBuilder] FFmpeg started with command: ${cmd}`);
       })
       .on('end', async () => {
         console.log(`[videoBuilder] Local generation success: ${localOutputPath}`);
@@ -123,7 +128,6 @@ export async function concatenateClassVideo(
           // Clean up temporary files safely
           fs.unlinkSync(tempIntroPath);
           fs.unlinkSync(tempOutroPath);
-          fs.unlinkSync(listFilePath);
           fs.unlinkSync(localOutputPath);
 
           resolve(publicUrl);
