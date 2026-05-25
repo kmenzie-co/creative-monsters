@@ -21,7 +21,6 @@ export function UploadForm({ prompt, classId, classTitle }: UploadFormProps) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [monsterName, setMonsterName] = useState("");
-  const [nickname, setNickname] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +63,7 @@ export function UploadForm({ prompt, classId, classTitle }: UploadFormProps) {
       class_id: classId || null,
       class_title: classTitle || null,
       has_artwork_name: !!monsterName,
-      has_creator_nickname: !!nickname
+      has_creator_nickname: false
     });
 
     try {
@@ -90,7 +89,7 @@ export function UploadForm({ prompt, classId, classTitle }: UploadFormProps) {
         .getPublicUrl(filePath);
 
       // 3. Save submission record in DB (Server Action)
-      const result = await saveSubmission(publicUrl, monsterName, nickname, classId);
+      const result = await saveSubmission(publicUrl, monsterName, "", classId);
       
       if (result?.error) {
         setError(result.error);
@@ -101,7 +100,7 @@ export function UploadForm({ prompt, classId, classTitle }: UploadFormProps) {
           class_id: classId || null,
           class_title: classTitle || null,
           has_artwork_name: !!monsterName,
-          has_creator_nickname: !!nickname,
+          has_creator_nickname: false,
           submission_id: result?.id
         });
         setIsSuccess(true);
@@ -251,20 +250,6 @@ export function UploadForm({ prompt, classId, classTitle }: UploadFormProps) {
               onChange={(e) => setMonsterName(e.target.value)}
               placeholder="e.g. The Super Speedy Spaceship"
               required
-              className="w-full rounded-xl border-2 border-gray-100 px-4 py-3 focus:border-monster-blue focus:outline-none transition-colors"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="nickname" className="block text-sm font-semibold text-gray-700 mb-2">
-              What is your Monster Nickname?
-            </label>
-            <input
-              type="text"
-              id="nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              placeholder="e.g. Captain Creative"
               className="w-full rounded-xl border-2 border-gray-100 px-4 py-3 focus:border-monster-blue focus:outline-none transition-colors"
             />
           </div>
