@@ -7,6 +7,7 @@ import { PostHogProvider } from "@/providers/PostHogProvider";
 import PostHogPageView from "@/components/PostHogPageView";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -37,6 +38,20 @@ export default function RootLayout({
       className={`${outfit.variable} ${fredoka.variable} h-full antialiased`}
     >
       <body className="min-h-full overflow-x-hidden flex flex-col bg-background text-foreground selection:bg-monster-pink/30">
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18195705961"
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18195705961');
+          `}
+        </Script>
+
         <PostHogProvider>
           <Suspense fallback={null}>
             <PostHogPageView />
