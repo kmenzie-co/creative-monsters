@@ -35,9 +35,6 @@ export function MonsterCard({ monster }: MonsterCardProps) {
         <h3 className="font-display text-xl font-bold text-gray-900 group-hover:text-monster-pink transition-colors">
           {monster.monster_name}
         </h3>
-        <p className="mt-1 text-sm font-medium text-gray-500 italic">
-          Built by {monster.creator_nickname || "a Mystery Maker"}
-        </p>
       </div>
       
       {/* Decorative corner element */}

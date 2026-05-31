@@ -54,11 +54,6 @@ export default async function ClassIdPage(props: { params: Promise<{ id: string 
                     />
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
                       <p className="font-bold text-sm truncate">{sub.monster_name}</p>
-                      {sub.creator_nickname && (
-                        <p className="text-xs text-monster-blue font-semibold truncate">
-                          by {sub.creator_nickname}
-                        </p>
-                      )}
                     </div>
                   </a>
                 </div>
