@@ -101,13 +101,35 @@ export default function RootLayout({
             {children}
           </main>
 
-          <footer className="mt-auto pointer-events-none overflow-visible">
-            <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
-              <div className="blob-animation absolute -top-[10%] -left-[10%] h-[800px] w-[800px] rounded-full bg-monster-blue/10 blur-3xl" />
-              <div className="blob-animation absolute top-[20%] -right-[10%] h-[600px] w-[600px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
-              <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
+          <footer className="w-full border-t border-black/5 bg-white/40 backdrop-blur-md relative z-10 py-6">
+            <div className="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4 font-sans text-sm text-muted-foreground">
+              <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-center md:text-left">
+                <span>© {new Date().getFullYear()} Creative Monsters.</span>
+                <span className="hidden sm:inline text-black/10">|</span>
+                <span>Made with ✨ and imagination for kids everywhere.</span>
+              </div>
+              <div className="flex items-center gap-4 sm:gap-6">
+                <Link
+                  href="/privacy"
+                  className="hover:text-monster-pink transition-colors font-medium"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/gallery"
+                  className="hover:text-monster-blue transition-colors font-medium"
+                >
+                  Gallery
+                </Link>
+              </div>
             </div>
           </footer>
+
+          <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none">
+            <div className="blob-animation absolute -top-[10%] -left-[10%] h-[800px] w-[800px] rounded-full bg-monster-blue/10 blur-3xl" />
+            <div className="blob-animation absolute top-[20%] -right-[10%] h-[600px] w-[600px] rounded-full bg-monster-pink/10 blur-3xl [animation-delay:2s]" />
+            <div className="blob-animation absolute -bottom-[10%] left-[20%] h-[1000px] w-[1000px] rounded-full bg-monster-orange/5 blur-3xl [animation-delay:4s]" />
+          </div>
           <Analytics />
         </PostHogProvider>
       </body>
