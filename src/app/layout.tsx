@@ -8,6 +8,7 @@ import PostHogPageView from "@/components/PostHogPageView";
 import { Suspense } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
+import { HeaderNav } from "@/components/HeaderNav";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -56,46 +57,7 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <PostHogPageView />
           </Suspense>
-          <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/80 backdrop-blur-md transform-gpu backface-hidden">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
-              <Link href="/" className="group flex items-center gap-2">
-                <Image
-                  src="/logo.png"
-                  alt="Creative Monsters"
-                  width={180}
-                  height={40}
-                  className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
-                  priority
-                />
-              </Link>
-              <nav className="flex items-center gap-4 sm:gap-6">
-                <Link
-                  href="/gallery"
-                  className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-pink transition-colors"
-                >
-                  Gallery
-                </Link>
-                <Link
-                  href="/blog"
-                  className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-blue transition-colors"
-                >
-                  Blog
-                </Link>
-                <Link
-                  href="/classes"
-                  className="text-sm sm:text-base font-medium text-muted-foreground hover:text-monster-orange transition-colors"
-                >
-                  Classes
-                </Link>
-                <Link
-                  href="/upload"
-                  className="rounded-full bg-monster-blue px-4 py-1.5 text-sm sm:text-base font-medium text-white shadow-lg shadow-monster-blue/20 hover:bg-monster-blue/90 transition-all hover:scale-105 active:scale-95"
-                >
-                  Share your art
-                </Link>
-              </nav>
-            </div>
-          </header>
+          <HeaderNav />
 
           <main className="flex-1 relative isolate">
             {children}
