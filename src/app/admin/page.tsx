@@ -198,6 +198,11 @@ export default function AdminPage() {
                       </span>
                     </div>
                   )}
+                  {monster.prompt_description && (
+                    <p className="text-xs text-gray-500 italic mb-4 pl-2 border-l-2 border-black/5">
+                      &ldquo;{monster.prompt_description}&rdquo;
+                    </p>
+                  )}
                   <p className="text-sm text-gray-500 mb-6">
                     By {monster.creator_nickname || "A Mystery Monster"}
                   </p>

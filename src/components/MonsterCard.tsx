@@ -9,6 +9,7 @@ interface MonsterCardProps {
     monster_name: string;
     creator_nickname: string | null;
     prompt_title?: string;
+    prompt_description?: string;
   };
 }
 
@@ -57,6 +58,12 @@ export function MonsterCard({ monster }: MonsterCardProps) {
                 {displayPrompt}
               </span>
             </div>
+          )}
+
+          {monster.prompt_description && (
+            <p className="mt-2.5 text-[11px] text-gray-500 italic line-clamp-2 leading-snug font-sans pl-1.5 border-l-2 border-black/5">
+              &ldquo;{monster.prompt_description}&rdquo;
+            </p>
           )}
         </div>
       </div>
