@@ -8,10 +8,16 @@ interface MonsterCardProps {
     image_url: string;
     monster_name: string;
     creator_nickname: string | null;
+    prompt_title?: string;
   };
 }
 
 export function MonsterCard({ monster }: MonsterCardProps) {
+  const isClass = monster.prompt_title?.startsWith("Class:");
+  const displayPrompt = monster.prompt_title
+    ? monster.prompt_title.replace(/^(Class: |Daily Challenge: )/, "")
+    : "";
+
   return (
     <motion.div
       variants={{
@@ -19,26 +25,44 @@ export function MonsterCard({ monster }: MonsterCardProps) {
         show: { opacity: 1, y: 0, scale: 1 },
       }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative overflow-hidden rounded-3xl bg-white p-3 shadow-lg shadow-black/5 ring-1 ring-black/5 transition-shadow hover:shadow-xl"
+      className="group relative overflow-hidden rounded-3xl bg-white p-3 shadow-lg shadow-black/5 ring-1 ring-black/5 transition-shadow hover:shadow-xl flex flex-col justify-between"
     >
-      <div className="aspect-square relative overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center">
-        <img
-          src={monster.image_url}
-          alt={monster.monster_name}
-          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105 p-2"
-        />
-        {/* Subtle overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-      </div>
+      <div>
+        <div className="aspect-square relative overflow-hidden rounded-2xl bg-gray-100 flex items-center justify-center">
+          <img
+            src={monster.image_url}
+            alt={monster.monster_name}
+            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105 p-2"
+          />
+          {/* Subtle overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        </div>
 
-      <div className="mt-4 px-2 pb-2 text-left">
-        <h3 className="font-display text-xl font-bold text-gray-900 group-hover:text-monster-pink transition-colors">
-          {monster.monster_name}
-        </h3>
+        <div className="mt-4 px-2 pb-2 text-left">
+          <h3 className="font-display text-xl font-bold text-gray-900 group-hover:text-monster-pink transition-colors line-clamp-1">
+            {monster.monster_name}
+          </h3>
+          
+          {monster.prompt_title && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              <span 
+                className={`inline-block text-[11px] font-medium px-2 py-0.5 rounded-full truncate max-w-full font-sans ${
+                  isClass 
+                    ? "bg-monster-orange/10 text-monster-orange border border-monster-orange/10" 
+                    : "bg-monster-blue/10 text-monster-blue border border-monster-blue/10"
+                }`}
+                title={monster.prompt_title}
+              >
+                {isClass ? "🎓 " : "✨ "}
+                {displayPrompt}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
       
       {/* Decorative corner element */}
-      <div className="absolute -right-2 -bottom-2 h-12 w-12 rounded-full bg-monster-pink/10 blur-xl group-hover:bg-monster-pink/20 transition-colors" />
+      <div className="absolute -right-2 -bottom-2 h-12 w-12 rounded-full bg-monster-pink/10 blur-xl group-hover:bg-monster-pink/20 transition-colors pointer-events-none" />
     </motion.div>
   );
 }

@@ -52,7 +52,7 @@ export async function submitMonster(formData: FormData) {
 export async function getPendingSubmissions() {
   const { data, error } = await supabaseAdmin
     .from("submissions")
-    .select("*")
+    .select("*, classes(title)")
     .eq("status", "pending")
     .order("created_at", { ascending: false });
 
@@ -65,7 +65,31 @@ export async function getPendingSubmissions() {
     return [];
   }
 
-  return data;
+  // Fetch prompts to resolve prompt titles
+  const { data: prompts } = await supabaseAdmin
+    .from("prompts")
+    .select("date, title");
+
+  const promptMap: Record<string, string> = {};
+  if (prompts) {
+    prompts.forEach((p) => {
+      promptMap[p.date] = p.title;
+    });
+  }
+
+  return data.map((sub: any) => {
+    let resolvedPromptTitle = "";
+    if (sub.classes?.title) {
+      resolvedPromptTitle = `Class: ${sub.classes.title}`;
+    } else {
+      const denverDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver' }).format(new Date(sub.created_at));
+      resolvedPromptTitle = promptMap[denverDate] ? `Daily Challenge: ${promptMap[denverDate]}` : "Daily Challenge";
+    }
+    return {
+      ...sub,
+      prompt_title: resolvedPromptTitle,
+    };
+  });
 }
 
 export async function approveMonster(id: string) {
@@ -102,7 +126,7 @@ export async function rejectMonster(id: string) {
 export async function getApprovedSubmissions() {
   const { data, error } = await supabaseAdmin
     .from("submissions")
-    .select("*")
+    .select("*, classes(title)")
     .eq("status", "approved")
     .order("created_at", { ascending: false });
 
@@ -115,7 +139,31 @@ export async function getApprovedSubmissions() {
     return [];
   }
 
-  return data;
+  // Fetch prompts to resolve prompt titles
+  const { data: prompts } = await supabaseAdmin
+    .from("prompts")
+    .select("date, title");
+
+  const promptMap: Record<string, string> = {};
+  if (prompts) {
+    prompts.forEach((p) => {
+      promptMap[p.date] = p.title;
+    });
+  }
+
+  return data.map((sub: any) => {
+    let resolvedPromptTitle = "";
+    if (sub.classes?.title) {
+      resolvedPromptTitle = `Class: ${sub.classes.title}`;
+    } else {
+      const denverDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver' }).format(new Date(sub.created_at));
+      resolvedPromptTitle = promptMap[denverDate] ? `Daily Challenge: ${promptMap[denverDate]}` : "Daily Challenge";
+    }
+    return {
+      ...sub,
+      prompt_title: resolvedPromptTitle,
+    };
+  });
 }
 
 export async function getTodayPrompt() {
@@ -146,7 +194,7 @@ export async function getTodayPrompt() {
 export async function getApprovedSubmissionsForClass(classId: string) {
   const { data, error } = await supabaseAdmin
     .from("submissions")
-    .select("*")
+    .select("*, classes(title)")
     .eq("status", "approved")
     .eq("class_id", classId)
     .order("created_at", { ascending: false });
@@ -156,5 +204,10 @@ export async function getApprovedSubmissionsForClass(classId: string) {
     return [];
   }
 
-  return data;
+  return data.map((sub: any) => {
+    return {
+      ...sub,
+      prompt_title: sub.classes?.title ? `Class: ${sub.classes.title}` : "Class Project",
+    };
+  });
 }

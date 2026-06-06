@@ -187,6 +187,17 @@ export default function AdminPage() {
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-xl font-bold text-gray-900 mb-1">{monster.monster_name}</h3>
+                  {monster.prompt_title && (
+                    <div className="mb-2">
+                      <span className={`inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full ${
+                        monster.prompt_title.startsWith("Class:")
+                          ? "bg-monster-orange/10 text-monster-orange"
+                          : "bg-monster-blue/10 text-monster-blue"
+                      }`}>
+                        {monster.prompt_title}
+                      </span>
+                    </div>
+                  )}
                   <p className="text-sm text-gray-500 mb-6">
                     By {monster.creator_nickname || "A Mystery Monster"}
                   </p>
