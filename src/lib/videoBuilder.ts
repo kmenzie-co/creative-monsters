@@ -91,6 +91,7 @@ export async function concatenateClassVideo(
       .outputOptions([
         '-c:v libx264',
         '-c:a aac',
+        '-pix_fmt yuv420p',
         '-vsync 2',
         '-preset fast'
       ])

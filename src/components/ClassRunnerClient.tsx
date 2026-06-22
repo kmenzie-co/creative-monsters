@@ -15,6 +15,7 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
   
   const [error, setError] = useState<string | null>(null);
   const [finalVideoUrl, setFinalVideoUrl] = useState<string | null>(null);
+  const [isEnded, setIsEnded] = useState(false);
 
   // Individual Stage States
   const [introStatus, setIntroStatus] = useState<AvatarVideoStatus | 'idle'>('idle');
@@ -34,6 +35,7 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
     setIntroStatus('pending');
     setOutroStatus('pending');
     setPlaylistIndex(0);
+    setIsEnded(false);
 
     try {
       const [introRes, outroRes] = await Promise.all([
@@ -108,7 +110,14 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
   const handleVideoEnded = () => {
     if (playlistIndex < playlist.length - 1) {
       setPlaylistIndex(prev => prev + 1);
+    } else {
+      setIsEnded(true);
     }
+  };
+
+  const handleReplay = () => {
+    setPlaylistIndex(0);
+    setIsEnded(false);
   };
 
   return (
@@ -170,14 +179,47 @@ export function ClassRunnerClient({ classData }: { classData: any }) {
 
         {phase === 'ready' && playlist[playlistIndex] && (
           <motion.div key="ready" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full pb-20">
-            <div className="aspect-video w-full max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-black mb-8 border border-gray-200">
-              <video 
-                src={playlist[playlistIndex]} 
-                controls 
-                autoPlay 
-                onEnded={handleVideoEnded}
-                className={`w-full h-full ${playlistIndex === 1 ? 'object-contain' : 'object-cover'}`} 
-              />
+            <div className="aspect-video w-full max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl bg-black mb-8 border border-gray-200 relative">
+              {isEnded ? (
+                <motion.div 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  className="absolute inset-0 bg-gradient-to-br from-monster-blue/90 via-gray-900 to-black flex flex-col items-center justify-center p-8 text-center text-white"
+                >
+                  <h3 className="text-3xl sm:text-4xl font-display font-bold mb-3">
+                    Class Completed! 🎉
+                  </h3>
+                  <p className="text-gray-300 text-lg mb-8 max-w-md">
+                    Outstanding job, {childName}! Ready to show off your amazing work to the world?
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <button
+                      id="btn-scroll-to-upload"
+                      onClick={() => {
+                        document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="px-8 py-4 bg-monster-blue text-white font-bold rounded-xl shadow-lg hover:scale-105 active:scale-95 transition-transform flex items-center justify-center gap-2 text-lg cursor-pointer"
+                    >
+                      Share Your Art! 🎨
+                    </button>
+                    <button
+                      id="btn-replay-class"
+                      onClick={handleReplay}
+                      className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl shadow-lg border border-white/20 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center gap-2 text-lg cursor-pointer"
+                    >
+                      Watch Again 🔄
+                    </button>
+                  </div>
+                </motion.div>
+              ) : (
+                <video 
+                  src={playlist[playlistIndex]} 
+                  controls 
+                  autoPlay 
+                  onEnded={handleVideoEnded}
+                  className={`w-full h-full ${playlistIndex === 1 ? 'object-contain' : 'object-cover'}`} 
+                />
+              )}
             </div>
             <div className="max-w-3xl mx-auto">
               <h1 className="text-4xl font-display font-bold text-gray-900 mb-4">{classData.title}</h1>

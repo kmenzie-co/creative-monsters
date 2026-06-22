@@ -26,7 +26,7 @@ export default async function ClassIdPage(props: { params: Promise<{ id: string 
       <ClassRunnerClient classData={classData} />
 
       {/* Grid containing Upload Form and Gallery of Approved Art */}
-      <div className="w-full mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-gray-100 pt-12">
+      <div id="upload-section" className="w-full mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-gray-100 pt-12">
         {/* Left Side: Upload your art */}
         <div>
           <UploadForm classId={classData.id} classTitle={classData.title} />

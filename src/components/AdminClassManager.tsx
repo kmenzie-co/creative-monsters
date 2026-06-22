@@ -165,6 +165,7 @@ export function AdminClassManager() {
             <div>
               <label className="block text-sm font-semibold mb-2">Core Lesson Video</label>
               <input required type="file" accept="video/mp4,video/quicktime" onChange={e => setVideoFile(e.target.files?.[0] || null)} className="w-full text-sm block"/>
+              <p className="text-xs text-gray-500 mt-1">Note: Use H.264 video codec with AAC audio for full Chromebook support. HEVC/H.265 or ProRes videos will not play video on Chromebooks.</p>
             </div>
           </div>
 
