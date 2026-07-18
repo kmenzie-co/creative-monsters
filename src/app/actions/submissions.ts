@@ -186,6 +186,26 @@ export async function getApprovedSubmissions() {
   });
 }
 
+export async function getRecentApprovedSubmissions(limit = 5) {
+  const { data, error } = await supabaseAdmin
+    .from("submissions")
+    .select("*, classes(title, description)")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    if (error.code === 'PGRST205') {
+      console.warn("Table 'submissions' not found. Please run the SQL schema in your Supabase dashboard.");
+      return [];
+    }
+    console.error("Fetch recent approved error:", error);
+    return [];
+  }
+
+  return data;
+}
+
 export async function getTodayPrompt() {
   try {
     // Use Mountain Time (America/Denver) for prompt switching

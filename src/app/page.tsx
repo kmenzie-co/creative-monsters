@@ -1,12 +1,19 @@
-import { DAILY_PROMPT, SUPPORTING_COPY } from "@/lib/constants";
-import { getTodayPrompt } from "@/app/actions/submissions";
+import { DAILY_PROMPT } from "@/lib/constants";
+import { getRecentApprovedSubmissions, getTodayPrompt } from "@/app/actions/submissions";
+import { getRecentClasses } from "@/app/actions/classes";
+import { getRecentPublishedPosts } from "@/app/actions/blog";
 import { HomeHero } from "@/components/HomeHero";
 import { ParallaxFooter } from "@/components/ParallaxFooter";
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const dbPrompt = await getTodayPrompt();
+  const [dbPrompt, galleryMonsters, recentClasses, recentPosts] = await Promise.all([
+    getTodayPrompt(),
+    getRecentApprovedSubmissions(5),
+    getRecentClasses(3),
+    getRecentPublishedPosts(3),
+  ]);
   
   const displayPrompt = dbPrompt || {
     title: DAILY_PROMPT.title,
@@ -17,7 +24,9 @@ export default async function Home() {
     <div className="relative min-h-screen">
       <HomeHero 
         prompt={displayPrompt} 
-        supportingCopy={SUPPORTING_COPY} 
+        galleryMonsters={galleryMonsters}
+        recentClasses={recentClasses}
+        recentPosts={recentPosts}
       />
       <div className="-mt-12 overflow-visible">
         <ParallaxFooter />

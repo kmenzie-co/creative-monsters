@@ -61,6 +61,20 @@ export async function getClasses() {
   return data;
 }
 
+export async function getRecentClasses(limit = 3) {
+  const { data, error } = await supabaseAdmin
+    .from('classes')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('Recent class fetch error:', error);
+    return [];
+  }
+  return data;
+}
+
 export async function getClassById(id: string) {
   const { data, error } = await supabaseAdmin
     .from('classes')

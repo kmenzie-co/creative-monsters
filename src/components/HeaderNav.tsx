@@ -29,9 +29,10 @@ export function HeaderNav() {
   }, [isOpen]);
 
   const navLinks = [
-    { href: "/gallery", label: "Gallery", color: "hover:text-monster-pink", icon: GalleryHorizontal },
-    { href: "/blog", label: "Blog", color: "hover:text-monster-blue", icon: BookOpen },
+    { href: "/", label: "Daily Challenge", color: "hover:text-monster-blue", icon: Sparkles },
+    { href: "/blog", label: "Projects", color: "hover:text-monster-pink", icon: BookOpen },
     { href: "/classes", label: "Classes", color: "hover:text-monster-orange", icon: GraduationCap },
+    { href: "/gallery", label: "Gallery", color: "hover:text-monster-pink", icon: GalleryHorizontal },
   ];
 
   return (
@@ -61,13 +62,6 @@ export function HeaderNav() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/upload"
-            className="rounded-full bg-monster-blue px-5 py-2 text-base font-medium text-white shadow-lg shadow-monster-blue/20 hover:bg-monster-blue/90 transition-all hover:scale-105 active:scale-95 flex items-center gap-1.5"
-          >
-            <Sparkles className="w-4 h-4" />
-            Share your art
-          </Link>
         </nav>
 
         {/* Hamburger Toggle (Mobile) */}

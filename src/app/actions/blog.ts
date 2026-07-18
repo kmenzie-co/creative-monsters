@@ -19,6 +19,23 @@ export async function getPublishedPosts() {
   return data;
 }
 
+export async function getRecentPublishedPosts(limit = 3) {
+  const now = new Date().toISOString();
+  const { data, error } = await supabaseAdmin
+    .from("posts")
+    .select("*")
+    .lte("publish_date", now)
+    .eq("status", "scheduled")
+    .order("publish_date", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error("Error fetching recent posts:", error);
+    return [];
+  }
+  return data;
+}
+
 export async function getPostBySlug(slug: string) {
   const { data, error } = await supabaseAdmin
     .from("posts")
