@@ -115,9 +115,9 @@ export function HomeHero({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative z-10 mr-[var(--fig-overhang)] max-w-3xl [--fig-overhang:3.5rem] [--fig-w:12.5rem] sm:[--fig-overhang:5.5rem] sm:[--fig-w:19rem] md:[--fig-overhang:6.5rem] md:[--fig-w:22rem] lg:max-w-[64rem] lg:pt-14 lg:[--fig-overhang:8rem] lg:[--fig-w:25rem]"
+            className="relative z-10 mr-[var(--fig-overhang)] max-w-3xl [--fig-overhang:3.5rem] [--fig-w:12.5rem] max-[480px]:mr-0 sm:[--fig-overhang:5.5rem] sm:[--fig-w:19rem] md:[--fig-overhang:6.5rem] md:[--fig-w:22rem] lg:max-w-[64rem] lg:pt-14 lg:[--fig-overhang:8rem] lg:[--fig-w:25rem]"
           >
-            <div className="relative z-10 overflow-hidden rounded-[2rem] border-4 border-white bg-white p-5 pr-[calc(var(--fig-w)-var(--fig-overhang)+1.25rem)] shadow-2xl shadow-monster-blue/10 sm:p-7 sm:pr-[calc(var(--fig-w)-var(--fig-overhang)+1.75rem)] lg:min-h-[27rem] lg:p-9 lg:pr-[calc(var(--fig-w)-var(--fig-overhang)+2rem)]">
+            <div className="relative z-10 overflow-hidden rounded-[2rem] border-4 border-white bg-white p-5 pr-[calc(var(--fig-w)-var(--fig-overhang)+1.25rem)] shadow-2xl shadow-monster-blue/10 max-[480px]:pr-5 sm:p-7 sm:pr-[calc(var(--fig-w)-var(--fig-overhang)+1.75rem)] lg:min-h-[27rem] lg:p-9 lg:pr-[calc(var(--fig-w)-var(--fig-overhang)+2rem)]">
               <div className="absolute inset-x-0 top-0 h-3 bg-[linear-gradient(90deg,#00adef,#e53e7d,#f97316,#8b5cf6)]" />
 
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-monster-blue/20 bg-monster-blue/10 px-3 py-1.5 text-xs font-bold text-monster-blue sm:mb-6 sm:px-4 sm:py-2 sm:text-sm">
@@ -148,14 +148,14 @@ export function HomeHero({
               </div>
             </div>
 
-            <div className="pointer-events-none absolute bottom-[-0.65rem] right-[calc(var(--fig-overhang)*-1)] z-20 w-[var(--fig-w)] sm:bottom-[-0.8rem] lg:bottom-[-1rem]">
+            <div className="pointer-events-none absolute bottom-[-0.65rem] right-[calc(var(--fig-overhang)*-1)] z-20 w-[var(--fig-w)] max-[480px]:hidden sm:bottom-[-0.8rem] lg:bottom-[-1rem]">
               <img
                 src="/assets/fig-presenter.png"
                 alt="Fig smiling and presenting today's creative challenge"
                 className="h-auto w-full drop-shadow-[0_24px_26px_rgba(0,173,239,0.22)]"
               />
             </div>
-            <div className="absolute -bottom-3 right-0 z-0 h-28 w-80 rounded-full bg-monster-blue/20 blur-2xl" />
+            <div className="absolute -bottom-3 right-0 z-0 h-28 w-80 rounded-full bg-monster-blue/20 blur-2xl max-[480px]:hidden" />
           </motion.div>
         </div>
       </section>
