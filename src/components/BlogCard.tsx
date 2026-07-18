@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Calendar, Tag, ChevronRight } from "lucide-react";
+import { Calendar, ChevronRight } from "lucide-react";
 
 interface BlogCardProps {
   post: {
@@ -35,11 +35,6 @@ export function BlogCard({ post }: BlogCardProps) {
           alt={post.hero_image_alt}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        <div className="absolute top-4 left-4">
-          <span className="rounded-full bg-monster-blue/90 px-4 py-1.5 text-xs font-bold text-white shadow-sm backdrop-blur-sm uppercase tracking-wider">
-            {post.post_type}
-          </span>
-        </div>
       </Link>
 
       <div className="flex flex-1 flex-col p-6">
@@ -59,18 +54,9 @@ export function BlogCard({ post }: BlogCardProps) {
         </p>
 
         <div className="flex items-center justify-between mt-auto">
-          <div className="flex gap-2">
-            {post.category_tags.slice(0, 2).map((tag) => (
-              <span key={tag} className="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-[10px] font-bold text-gray-500 uppercase">
-                <Tag className="h-2.5 w-2.5" />
-                {tag}
-              </span>
-            ))}
-          </div>
-
           <Link
             href={`/blog/${post.slug}`}
-            className="flex items-center gap-1 text-sm font-bold text-monster-blue hover:gap-2 transition-all"
+            className="ml-auto flex items-center gap-1 text-sm font-bold text-monster-blue hover:gap-2 transition-all"
           >
             Read More
             <ChevronRight className="h-4 w-4" />

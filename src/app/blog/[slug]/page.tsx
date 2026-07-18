@@ -1,6 +1,6 @@
 import { getPostBySlug } from "@/app/actions/blog";
 import { notFound } from "next/navigation";
-import { Calendar, Tag, ChevronLeft } from "lucide-react";
+import { Calendar, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { ParallaxFooter } from "@/components/ParallaxFooter";
 import ReactMarkdown from "react-markdown";
@@ -43,14 +43,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </Link>
 
             <div className="flex flex-col gap-6">
-               <div className="flex flex-wrap gap-3">
-                  {post.category_tags.map((tag: string) => (
-                    <span key={tag} className="rounded-full bg-black/40 px-4 py-1.5 text-xs font-bold text-white backdrop-blur-md uppercase tracking-wider border border-white/20 shadow-lg">
-                      {tag}
-                    </span>
-                  ))}
-               </div>
-
                <h1 className="max-w-4xl text-4xl font-display font-black text-white sm:text-5xl lg:text-7xl [text-shadow:0_4px_12px_rgba(0,0,0,0.8)] leading-tight">
                  {post.title}
                </h1>
@@ -71,17 +63,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
                     <Calendar className="h-4 w-4 text-monster-blue" />
                     {publishedDate}
-                  </div>
-               </div>
-
-               <div>
-                  <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-gray-400">Tags</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {post.category_tags.map((tag: string) => (
-                      <span key={tag} className="rounded-lg bg-gray-50 px-3 py-1.5 text-xs font-bold text-gray-600 border border-gray-100">
-                        #{tag}
-                      </span>
-                    ))}
                   </div>
                </div>
             </div>

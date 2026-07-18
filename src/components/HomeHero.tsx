@@ -266,10 +266,7 @@ export function HomeHero({
 
         {recentPosts.length > 0 ? (
           <div className="grid gap-5 md:grid-cols-3">
-            {recentPosts.map((post) => {
-              const tags = Array.isArray(post.category_tags) ? post.category_tags.slice(0, 2) : [];
-
-              return (
+            {recentPosts.map((post) => (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
@@ -281,28 +278,15 @@ export function HomeHero({
                       alt={post.hero_image_alt}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute left-4 top-4 rounded-full bg-monster-blue/95 px-3 py-1.5 text-xs font-bold uppercase text-white shadow-sm">
-                      {post.post_type}
-                    </div>
                   </div>
                   <div className="p-5">
                     <h3 className="text-xl font-bold leading-tight text-gray-900 transition-colors group-hover:text-monster-blue">
                       {post.title}
                     </h3>
                     <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-gray-600">{post.meta_description}</p>
-                    {tags.length > 0 && (
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {tags.map((tag) => (
-                          <span key={tag} className="rounded-full bg-gray-100 px-3 py-1 text-[10px] font-bold uppercase text-gray-500">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </Link>
-              );
-            })}
+            ))}
           </div>
         ) : (
           <EmptyPreview
